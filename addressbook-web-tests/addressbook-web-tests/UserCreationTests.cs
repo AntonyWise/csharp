@@ -11,12 +11,12 @@ using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressBookTests
 {
+    [TestFixture]
     class UserCreationTests
     {
         private IWebDriver driver;
         private StringBuilder verificationErrors;
         private string baseURL;
-        private bool acceptNextAllert = true;
 
         [SetUp]
         public void SetupTest()
@@ -31,6 +31,7 @@ namespace WebAddressBookTests
         {
             try
             {
+                driver.Close();
                 driver.Quit();
             }
             catch (Exception)
@@ -111,52 +112,5 @@ namespace WebAddressBookTests
             driver.Navigate().GoToUrl(baseURL + "/addressbook/");
         }
 
-        private bool IsElementPresent(By by)
-        {
-            try
-            {
-                driver.FindElement(by);
-                return true;
-            }
-            catch (NoSuchElementException)
-            {
-                return false;
-            }
-        }
-
-        private bool IsAlertPresent()
-        {
-            try
-            {
-                driver.SwitchTo().Alert();
-                return true;
-            }
-            catch (NoAlertPresentException)
-            {
-                return false;
-            }
-        }
-
-        private string CloseAlertAndGetItsText()
-        {
-            try
-            {
-                IAlert alert = driver.SwitchTo().Alert();
-                string alertText = alert.Text;
-                if (acceptNextAllert)
-                {
-                    alert.Accept();
-                }
-                else
-                {
-                    alert.Dismiss();
-                }
-                return alertText;
-            }
-            finally
-            {
-                acceptNextAllert = true;
-            }
-        }
     }
 }
