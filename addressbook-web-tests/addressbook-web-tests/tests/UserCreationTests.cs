@@ -15,7 +15,6 @@ namespace WebAddressBookTests
     class UserCreationTests
     {
         private IWebDriver driver;
-        private StringBuilder verificationErrors;
         private string baseURL;
 
         [SetUp]
@@ -23,7 +22,6 @@ namespace WebAddressBookTests
         {
             driver = new ChromeDriver();
             baseURL = "http://127.0.0.1";
-            verificationErrors = new StringBuilder();
         }
 
         [TearDown]
@@ -38,7 +36,6 @@ namespace WebAddressBookTests
             {
                 //
             }
-            Assert.AreEqual("", verificationErrors.ToString());
         }
 
         [Test]

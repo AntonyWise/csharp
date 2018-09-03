@@ -13,19 +13,22 @@ namespace WebAddressBookTests
         [Test]
         public void GroupCreationTest()
         {
-            OpenHomePage();
-            Login(new AccountData("admin", "secret"));
-            GoToGroupsPage();
-            InitGroupCreation();
+            appManager.Navi.GoToGroupsPage();
+            //navigationHelper.GoToGroupsPage();
 
+            appManager.Groups.InitGroupCreation();
+            //groupHelper.InitGroupCreation();
             //FillGroupForm(new GroupData("name", "header", "footer"));
             GroupData group = new GroupData("name");
             group.Header = "header";
             group.Footer = "footer";
-            FillGroupForm(group);
+            appManager.Groups.FillGroupForm(group);
+            //groupHelper.FillGroupForm(group);
 
-            SubmitGroupCreation();
-            ReturnToGroupsPage();
+            appManager.Groups.SubmitGroupCreation();
+            //groupHelper.SubmitGroupCreation();
+            appManager.Groups.ReturnToGroupsPage();
+            //groupHelper.ReturnToGroupsPage();
             //driver.FindElement(By.LinkText("Logout")).Click();
         }
 
