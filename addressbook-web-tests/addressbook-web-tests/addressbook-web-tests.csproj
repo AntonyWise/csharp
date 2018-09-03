@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="model\AccountData.cs" />
     <Compile Include="appmanager\ApplicationManager.cs" />
+    <Compile Include="tests\GroupModificationTests.cs" />
     <Compile Include="_figure\Circle.cs" />
     <Compile Include="_figure\Figure.cs" />
     <Compile Include="model\GroupData.cs" />

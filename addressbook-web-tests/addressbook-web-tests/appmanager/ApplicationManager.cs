@@ -37,9 +37,14 @@ namespace WebAddressBookTests
             driver = new ChromeDriver();
             baseURL = "http://127.0.0.1";
 
-            loginHelper = new LoginHelper(driver); // конструтор хелпера в раздел SetUp
-            navigationHelper = new NavigationHelper(driver, baseURL);
-            groupHelper = new GroupHelper(driver);
+            loginHelper = new LoginHelper(this); // конструтор хелпера в раздел SetUp
+            navigationHelper = new NavigationHelper(this, baseURL);
+            groupHelper = new GroupHelper(this);
+        }
+
+        public IWebDriver Driver
+        {
+            get { return driver; }
         }
 
         public LoginHelper Auth

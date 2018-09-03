@@ -14,14 +14,11 @@ namespace WebAddressBookTests
         [Test]
         public void GroupRemovalTest()
         {
-            appManager.Navi.GoToGroupsPage();
-            //navigationHelper.GoToGroupsPage();
+            appManager.Groups.Remove(1);
 
-            appManager.Groups.SelectGroup(1);
+            //navigationHelper.GoToGroupsPage();
             //groupHelper.SelectGroup(1); // всегда первая группа
-            appManager.Groups.RemoveGroup();
             //groupHelper.RemoveGroup();
-            appManager.Groups.ReturnToGroupsPage();
             //groupHelper.ReturnToGroupsPage();
             //driver.FindElement(By.LinkText("Logout")).Click();
         }

@@ -15,35 +15,64 @@ namespace WebAddressBookTests
     public class GroupHelper : HelperBase // видимость public + все методы в хелпере так же public !
     {
 
-        public GroupHelper(IWebDriver driver) : base(driver) // конструктор
+        public GroupHelper(ApplicationManager manager) 
+            : base(manager) // конструктор
         {
         }
 
-        public GroupHelper RemoveGroup()
+        public GroupHelper Modify(int v, GroupData newData)
+        {
+            manager.Navi.GoToGroupsPage();
+            SelectGroup(v);
+            InitGroupModification();
+            FillGroupForm(newData);
+            SubmitGroupModification();
+            ReturnToGroupsPage();
+            return this;
+        }
+
+        public GroupHelper Create(GroupData group)
+        {
+            manager.Navi.GoToGroupsPage();
+
+            InitGroupCreation();
+            FillGroupForm(group);
+            SubmitGroupCreation();
+            ReturnToGroupsPage();
+            return this; // возвращает GroupHelper
+        }
+
+        public GroupHelper Remove(int p)
+        {
+            manager.Navi.GoToGroupsPage();
+
+            SelectGroup(p);
+            RemoveGroup();
+            ReturnToGroupsPage();
+            return this;
+        }
+
+        public GroupHelper RemoveGroup() // возврат ссылки на сам метод для тестов
         {
             driver.FindElement(By.Name("delete")).Click();
-
             return this;
         }
 
         public GroupHelper SelectGroup(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click(); // передача индекса, а не конкретного элемента
-
             return this;
         }
 
         public GroupHelper ReturnToGroupsPage()
         {
             driver.FindElement(By.LinkText("group page")).Click();
-
             return this;
         }
 
         public GroupHelper SubmitGroupCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
-
             return this;
         }
 
@@ -55,14 +84,24 @@ namespace WebAddressBookTests
             driver.FindElement(By.Name("group_header")).SendKeys(group.Header);
             driver.FindElement(By.Name("group_footer")).Clear();
             driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
-
             return this;
         }
 
         public GroupHelper InitGroupCreation()
         {
             driver.FindElement(By.Name("new")).Click();
+            return this;
+        }
 
+        public GroupHelper SubmitGroupModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
+            return this;
+        }
+
+        public GroupHelper InitGroupModification()
+        {
+            driver.FindElement(By.Name("edit")).Click();
             return this;
         }
 

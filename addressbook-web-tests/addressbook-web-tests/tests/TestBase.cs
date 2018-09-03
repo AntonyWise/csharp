@@ -17,10 +17,6 @@ namespace WebAddressBookTests
             [SetUp]
             public void SetupTest()
             { 
-                //driver = new ChromeDriver();
-                //baseURL = "http://127.0.0.1";
-                //verificationErrors = new StringBuilder();
-
                 appManager = new ApplicationManager();
                 appManager.Navi.OpenHomePage();
                 appManager.Auth.Login(new AccountData("admin", "secret"));
