@@ -30,6 +30,49 @@ namespace WebAddressBookTests
             return this;
         }
 
+        public ContactHelper Modify(int user, UserData newUser)
+        {
+            manager.Navi.OpenHomePage();
+
+            SelectUser(user);
+            InitUserModification();
+            FillUserForm(newUser);
+            SubmitUserModification();
+            ReturnHomePage();
+            return this;
+        }
+
+        public ContactHelper InitUserModification()
+        {
+            driver.FindElement(By.XPath("//img[@title='Edit']")).Click();
+            return this;
+        }
+
+        public ContactHelper Remove(int user)
+        {
+            manager.Navi.OpenHomePage();
+
+            SelectUser(user);
+            RemoveUser();
+            //driver.SwitchTo().Alert().Accept();
+            ReturnHomePage();
+            return this;
+        }
+
+        public ContactHelper RemoveUser() // возврат ссылки на сам метод для тестов
+        {
+            driver.FindElement(By.XPath("//input[@value='Delete']")).Click(); // кнопка и нажатие
+            //driver.FindElement(By.XPath("/html[1]/body[1]/div[1]/div[4]/form[2]/div[2]/input[1]"));
+            driver.SwitchTo().Alert().Accept(); // закрытие диалогового окна
+            return this;
+        }
+
+        public ContactHelper SelectUser(int index)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click(); // передача индекса, а не конкретного элемента
+            return this;
+        }
+
         public ContactHelper FillUserForm(UserData user)
         {
             driver.FindElement(By.Name("firstname")).Click();
@@ -59,6 +102,12 @@ namespace WebAddressBookTests
         public ContactHelper ReturnHomePage()
         {
             driver.FindElement(By.LinkText("home")).Click();
+            return this;
+        }
+
+        public ContactHelper SubmitUserModification()
+        {
+            driver.FindElement(By.Name("update")).Click();
             return this;
         }
 

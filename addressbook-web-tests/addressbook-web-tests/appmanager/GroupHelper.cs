@@ -42,11 +42,11 @@ namespace WebAddressBookTests
             return this;
         }
 
-        public GroupHelper Remove(int p)
+        public GroupHelper Remove(int group)
         {
             manager.Navi.GoToGroupsPage();
 
-            SelectGroup(p);
+            SelectGroup(group);
             RemoveGroup();
             ReturnToGroupsPage();
             return this;
