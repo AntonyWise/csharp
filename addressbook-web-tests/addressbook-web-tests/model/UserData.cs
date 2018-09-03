@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebAddressBookTests
 {
-    class UserData
+    public class UserData // без модификатора public класс не доступен в ContactHelper
     {
         private string fFirstname;
         private string fLastname = "";

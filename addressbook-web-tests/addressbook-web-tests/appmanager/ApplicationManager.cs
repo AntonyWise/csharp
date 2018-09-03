@@ -18,6 +18,7 @@ namespace WebAddressBookTests
         protected LoginHelper loginHelper;
         protected NavigationHelper navigationHelper;
         protected GroupHelper groupHelper;
+        protected ContactHelper contactHelper;
 
         public void Stop()
         {
@@ -37,9 +38,10 @@ namespace WebAddressBookTests
             driver = new ChromeDriver();
             baseURL = "http://127.0.0.1";
 
-            loginHelper = new LoginHelper(this); // конструтор хелпера в раздел SetUp
-            navigationHelper = new NavigationHelper(this, baseURL);
-            groupHelper = new GroupHelper(this);
+            loginHelper = new LoginHelper(this); // конструктор хелпера логин
+            navigationHelper = new NavigationHelper(this, baseURL); // конструтор хелпера навигации
+            groupHelper = new GroupHelper(this); // конструктор хелпера групп
+            contactHelper = new ContactHelper(this); // конструктор хелпера контактов
         }
 
         public IWebDriver Driver
@@ -60,6 +62,11 @@ namespace WebAddressBookTests
         public GroupHelper Groups
         {
             get { return groupHelper; }
+        }
+
+        public ContactHelper User
+        {
+            get { return contactHelper; }
         }
 
     }

@@ -20,17 +20,6 @@ namespace WebAddressBookTests
         {
         }
 
-        public GroupHelper Modify(int v, GroupData newData)
-        {
-            manager.Navi.GoToGroupsPage();
-            SelectGroup(v);
-            InitGroupModification();
-            FillGroupForm(newData);
-            SubmitGroupModification();
-            ReturnToGroupsPage();
-            return this;
-        }
-
         public GroupHelper Create(GroupData group)
         {
             manager.Navi.GoToGroupsPage();
@@ -40,6 +29,17 @@ namespace WebAddressBookTests
             SubmitGroupCreation();
             ReturnToGroupsPage();
             return this; // возвращает GroupHelper
+        }
+
+        public GroupHelper Modify(int v, GroupData newData)
+        {
+            manager.Navi.GoToGroupsPage();
+            SelectGroup(v);
+            InitGroupModification();
+            FillGroupForm(newData);
+            SubmitGroupModification();
+            ReturnToGroupsPage();
+            return this;
         }
 
         public GroupHelper Remove(int p)

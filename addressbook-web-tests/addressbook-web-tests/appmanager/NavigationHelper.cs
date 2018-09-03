@@ -21,14 +21,19 @@ namespace WebAddressBookTests
             this.baseURL = baseURL;
         }
 
-        public void OpenHomePage()
+        public void OpenHomePage() // домашняя страница
         {
             driver.Navigate().GoToUrl(baseURL + "/addressbook/");
         }
 
-        public void GoToGroupsPage()
+        public void GoToGroupsPage() // страница групп
         {
             driver.FindElement(By.LinkText("groups")).Click();
+        }
+
+        public void GoToUserAddPage() // страница добавления юзера
+        {
+            driver.FindElement(By.LinkText("add new")).Click();
         }
 
     }
