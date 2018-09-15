@@ -69,7 +69,7 @@
     <Compile Include="model\AccountData.cs" />
     <Compile Include="appmanager\ApplicationManager.cs" />
     <Compile Include="tests\GroupModificationTests.cs" />
-    <Compile Include="tests\UserCreationTestsNew.cs" />
+    <Compile Include="tests\UserCreationTests.cs" />
     <Compile Include="tests\UserModificationTests.cs" />
     <Compile Include="tests\UserRemovalTests.cs" />
     <Compile Include="_figure\Circle.cs" />
@@ -84,7 +84,6 @@
     <Compile Include="tests\TestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="tests\GroupCreationTests.cs" />
-    <Compile Include="tests\UserCreationTests.cs" />
     <Compile Include="model\UserData.cs" />
   </ItemGroup>
   <ItemGroup>
