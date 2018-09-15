@@ -14,11 +14,25 @@ namespace WebAddressBookTests
         [Test]
         public void GroupModificationTest()
         {
-            GroupData newData = new GroupData("modify1");
-            newData.Header = "modify2";
-            newData.Footer = "modify3";
+            if (appManager.Groups.GroupIsAvailable())
+            {
+                GroupData newData = new GroupData("modify1");
+                newData.Header = "modify2";
+                newData.Footer = "modify3";
+                appManager.Groups.Modify(1, newData);
+            }
+            else
+            {
+                GroupData group = new GroupData("name");
+                group.Header = "header";
+                group.Footer = "footer";
+                appManager.Groups.Create(group);
 
-            appManager.Groups.Modify(1, newData);
+                GroupData newData = new GroupData("modify4");
+                newData.Header = "modify5";
+                newData.Footer = "modify6";
+                appManager.Groups.Modify(1, newData);
+            }
         }
 
     }

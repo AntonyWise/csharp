@@ -23,7 +23,6 @@ namespace WebAddressBookTests
         public GroupHelper Create(GroupData group)
         {
             manager.Navi.GoToGroupsPage();
-
             InitGroupCreation();
             FillGroupForm(group);
             SubmitGroupCreation();
@@ -31,10 +30,10 @@ namespace WebAddressBookTests
             return this; // возвращает GroupHelper
         }
 
-        public GroupHelper Modify(int v, GroupData newData)
+        public GroupHelper Modify(int group, GroupData newData)
         {
-            manager.Navi.GoToGroupsPage();
-            SelectGroup(v);
+            //manager.Navi.GoToGroupsPage();
+            SelectGroup(group);
             InitGroupModification();
             FillGroupForm(newData);
             SubmitGroupModification();
@@ -44,24 +43,29 @@ namespace WebAddressBookTests
 
         public GroupHelper Remove(int group)
         {
-            manager.Navi.GoToGroupsPage();
-
-            SelectGroup(group);
-            RemoveGroup();
-            ReturnToGroupsPage();
-            return this;
+            //manager.Navi.GoToGroupsPage();
+                SelectGroup(group);
+                RemoveGroup();
+                ReturnToGroupsPage();
+                return this;
         }
 
         public GroupHelper RemoveGroup() // возврат ссылки на сам метод для тестов
-        {
+        {      
             driver.FindElement(By.Name("delete")).Click();
             return this;
         }
 
         public GroupHelper SelectGroup(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click(); // передача индекса, а не конкретного элемента
-            return this;
+                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click(); // передача индекса, а не конкретного элемента
+                return this;
+        }
+
+        public bool GroupIsAvailable()
+        {
+            manager.Navi.GoToGroupsPage();
+            return IsElementPresent(By.XPath("//span[@class='group']"));
         }
 
         public GroupHelper ReturnToGroupsPage()

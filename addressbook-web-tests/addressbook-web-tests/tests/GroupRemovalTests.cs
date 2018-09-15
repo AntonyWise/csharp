@@ -14,13 +14,21 @@ namespace WebAddressBookTests
         [Test]
         public void GroupRemovalTest()
         {
-            appManager.Groups.Remove(1);
-
-            //navigationHelper.GoToGroupsPage();
-            //groupHelper.SelectGroup(1); // всегда первая группа
-            //groupHelper.RemoveGroup();
-            //groupHelper.ReturnToGroupsPage();
-            //driver.FindElement(By.LinkText("Logout")).Click();
+            if (appManager.Groups.GroupIsAvailable())
+            {
+                appManager.Groups.Remove(1);
+                Console.Out.Write("group deleted");
+            }
+            else
+            {
+                GroupData group = new GroupData("name");
+                group.Header = "header";
+                group.Footer = "footer";
+                appManager.Groups.Create(group);
+                Console.Out.Write("group added");
+                appManager.Groups.Remove(1);
+                Console.Out.Write("group deleted");
+            }
         }
 
     }

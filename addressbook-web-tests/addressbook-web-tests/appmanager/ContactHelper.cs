@@ -50,7 +50,7 @@ namespace WebAddressBookTests
 
         public ContactHelper Remove(int user)
         {
-            manager.Navi.OpenHomePage();
+            //manager.Navi.OpenHomePage();
             SelectUser(user);
             RemoveUser();
             //driver.SwitchTo().Alert().Accept();
@@ -64,6 +64,12 @@ namespace WebAddressBookTests
             //driver.FindElement(By.XPath("/html[1]/body[1]/div[1]/div[4]/form[2]/div[2]/input[1]"));
             driver.SwitchTo().Alert().Accept(); // закрытие диалогового окна
             return this;
+        }
+
+        public bool UserIsAvailable()
+        {
+            manager.Navi.OpenHomePage();
+            return IsElementPresent(By.XPath("//img[@title='Edit']"));
         }
 
         public ContactHelper SelectUser(int index)

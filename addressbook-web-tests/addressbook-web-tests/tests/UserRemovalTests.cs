@@ -14,7 +14,21 @@ namespace WebAddressBookTests
         [Test]
         public void UserRemovalTest()
         {
-            appManager.User.Remove(1);
+            if (appManager.User.UserIsAvailable())
+            {
+                appManager.User.Remove(1);
+            }
+            else
+            {
+                UserData user = new UserData("antonyNEW");
+                user.LastName = "wise";
+                user.Address = "russia, spb";
+                user.Telephone = "89005555555";
+                user.Email = "test@mail.ru";
+                appManager.User.Create(user);
+
+                appManager.User.Remove(1);
+            }
         }
 
     }
