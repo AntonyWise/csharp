@@ -8,23 +8,29 @@ using NUnit.Framework;
 
 namespace WebAddressBookTests
 {
-    public class TestBase : ApplicationManager
+    //public class TestBase : ApplicationManager // было так?
+    public class TestBase
     {
         protected ApplicationManager appManager;
  
             [SetUp]
-            public void SetupTest()
-            { 
-                appManager = new ApplicationManager();
-                appManager.Navi.OpenHomePage(); // всегда открываем стартовую страницу
-                appManager.Auth.Login(new AccountData("admin", "secret")); // всегда логинимся
+            public void SetupApplicationManager()
+            {
+            //appManager = TestSuiteFixture.app; // из TestSuiteFixture
+            appManager = ApplicationManager.GetInstance();
+            //appManager.Auth.Login(new AccountData("admin", "secret")); // всегда логинимся // убрали в AuthTestBase
+
+            // перемещаем данный код в общую инициализацию TestSuiteFixture
+            //appManager.Navi.OpenHomePage(); // всегда открываем стартовую страницу
+            //appManager.Auth.Login(new AccountData("admin", "secret")); // всегда логинимся
         }
 
-            [TearDown]
-            public void TearDownTest()
-            {
-                appManager.Stop(); // метод закрытия драйвера
-            }
+        // перемещаем останов в TestSuiteFixture
+        /*[TearDown]
+        public void TearDownTest()
+        {
+            appManager.Stop(); // метод закрытия драйвера
+        }*/
 
     }
 }

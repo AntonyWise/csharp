@@ -8,6 +8,8 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Support.UI;
 
+using System.Threading;
+
 namespace WebAddressBookTests
 {
     public class ApplicationManager
@@ -20,20 +22,10 @@ namespace WebAddressBookTests
         protected GroupHelper groupHelper;
         protected ContactHelper contactHelper;
 
-        public void Stop()
-        {
-            try
-            {
-                driver.Close();
-                driver.Quit();
-            }
-            catch (Exception ex)
-            {
-                //
-            }
-        }
+        //private static ApplicationManager instance; // убрали, запуск в потоках
+        private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>(); // спец.объект между потоком и объектом ApplicationManager
 
-        public ApplicationManager()
+        private ApplicationManager()
         {
             driver = new ChromeDriver();
             baseURL = "http://127.0.0.1";
@@ -42,6 +34,56 @@ namespace WebAddressBookTests
             navigationHelper = new NavigationHelper(this, baseURL); // конструтор хелпера навигации
             groupHelper = new GroupHelper(this); // конструктор хелпера групп
             contactHelper = new ContactHelper(this); // конструктор хелпера контактов
+        }
+
+        //деструктор, для избавления от метода Stop()
+        ~ApplicationManager() // для деструктора не нужен модификатор доступа !
+        {
+            try
+            {
+                //driver.Close();
+                driver.Quit();
+            }
+            catch (Exception ex)
+            {
+                //
+            }
+        }
+
+        // метод не нужен, т.к код в деструкторе
+        /*public void Stop()
+        {
+            try
+            {
+                //driver.Close();
+                driver.Quit();
+            }
+            catch (Exception ex)
+            {
+                //
+            }
+        }*/
+
+        public static ApplicationManager GetInstance() // static - глобальный метод 
+        {
+            /*if (instance == null)
+            {
+                instance = new ApplicationManager();
+            }
+
+            return instance;
+        }*/
+
+            if (!app.IsValueCreated)
+            {
+                ApplicationManager newInstance = new ApplicationManager();
+
+                newInstance.Navi.OpenHomePage(); // всегда открываем стартовую страницу
+                //app.Value = new ApplicationManager();
+                app.Value = newInstance;
+            }
+
+            return app.Value;
         }
 
         public IWebDriver Driver

@@ -68,7 +68,9 @@
     <Compile Include="appmanager\ContactHelper.cs" />
     <Compile Include="model\AccountData.cs" />
     <Compile Include="appmanager\ApplicationManager.cs" />
+    <Compile Include="tests\AuthTestBase.cs" />
     <Compile Include="tests\GroupModificationTests.cs" />
+    <Compile Include="tests\LoginTests.cs" />
     <Compile Include="tests\UserCreationTests.cs" />
     <Compile Include="tests\UserModificationTests.cs" />
     <Compile Include="tests\UserRemovalTests.cs" />
@@ -87,7 +89,6 @@
     <Compile Include="model\UserData.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>
