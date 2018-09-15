@@ -34,24 +34,23 @@ namespace WebAddressBookTests
         {
             manager.Navi.OpenHomePage();
 
-            SelectUser(user);
-            InitUserModification();
+            //SelectUser(user);
+            InitUserModification(user);
             FillUserForm(newUser);
             SubmitUserModification();
             ReturnHomePage();
             return this;
         }
 
-        public ContactHelper InitUserModification()
+        public ContactHelper InitUserModification(int index)
         {
-            driver.FindElement(By.XPath("//img[@title='Edit']")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).FindElement(By.XPath("//img[@title='Edit']")).Click();
             return this;
         }
 
         public ContactHelper Remove(int user)
         {
             manager.Navi.OpenHomePage();
-
             SelectUser(user);
             RemoveUser();
             //driver.SwitchTo().Alert().Accept();
