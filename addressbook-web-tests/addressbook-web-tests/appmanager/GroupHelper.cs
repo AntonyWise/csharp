@@ -25,6 +25,7 @@ namespace WebAddressBookTests
             List<GroupData> groups = new List<GroupData>(); // пустой список элементов GroupData
             manager.Navi.GoToGroupsPage(); // переходим на страницу групп
             ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group")); // коллекция элементов страницы по селектору
+            Console.Out.Write(elements.Count);
             // преобразование IWebElement в GroupData
             foreach (IWebElement element in elements)
             {

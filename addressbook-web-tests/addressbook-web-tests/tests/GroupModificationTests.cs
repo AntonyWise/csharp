@@ -19,7 +19,16 @@ namespace WebAddressBookTests
                 GroupData newData = new GroupData("modify1");
                 newData.Header = "modify2";
                 newData.Footer = "modify3";
+
+                List<GroupData> oldGroups = appManager.Groups.GetGroupList();
                 appManager.Groups.Modify(0, newData);
+
+                List<GroupData> newGroups = appManager.Groups.GetGroupList();
+                oldGroups[0].Name = newData.Name;
+                // сортировка групп перед сравнением
+                oldGroups.Sort();
+                newGroups.Sort();
+                Assert.AreEqual(oldGroups, newGroups); // ожидаемое и фактическое значение
             }
             else
             {
@@ -31,7 +40,16 @@ namespace WebAddressBookTests
                 GroupData newData = new GroupData("modify4");
                 newData.Header = "modify5";
                 newData.Footer = "modify6";
+
+                List<GroupData> oldGroups = appManager.Groups.GetGroupList();
                 appManager.Groups.Modify(0, newData);
+
+                List<GroupData> newGroups = appManager.Groups.GetGroupList();
+                oldGroups[0].Name = newData.Name;
+                // сортировка групп перед сравнением
+                oldGroups.Sort();
+                newGroups.Sort();
+                Assert.AreEqual(oldGroups, newGroups); // ожидаемое и фактическое значение
             }
         }
 

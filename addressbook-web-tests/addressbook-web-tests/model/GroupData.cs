@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebAddressBookTests
 {
-    public class GroupData : IEquatable<GroupData> // для объектов определена функция сравнения
+    public class GroupData : IEquatable<GroupData>, IComparable<GroupData> // для объектов определена функция сравнения
     {
         private string name;
         private string header = "";
@@ -31,9 +31,23 @@ namespace WebAddressBookTests
             return Name == other.Name;
         }
 
-        public int GetHashCode()
+        public override int GetHashCode() // override т.к переопределяем стандартный метод GetHashCode
         {
             return Name.GetHashCode();
+        }
+
+        public override string ToString() // возврат строкового представления объектов типо GroupData
+        {
+            return "name=" + Name;
+        }
+
+        public int CompareTo(GroupData other) // определили метод для сравнения IComparable<GroupData>
+        {
+            if (Object.ReferenceEquals(other, null))
+            {
+                return 1;
+            }
+            return Name.CompareTo(other.Name);
         }
 
         // перегруженный конструктор

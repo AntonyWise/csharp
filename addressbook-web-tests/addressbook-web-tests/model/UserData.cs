@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebAddressBookTests
 {
-    public class UserData // без модификатора public класс не доступен в ContactHelper
+    public class UserData : IEquatable<UserData>, IComparable<UserData> // без модификатора public класс не доступен в ContactHelper
     {
         private string fFirstname;
         private string fLastname = "";
@@ -18,6 +18,38 @@ namespace WebAddressBookTests
         public UserData(string firstname)
         {
             fFirstname = firstname;
+        }
+
+        public bool Equals(UserData other) // стандартный метод сравнения
+        {
+            if (Object.ReferenceEquals(other, null)) // c null
+            {
+                return false;
+            }
+            if (Object.ReferenceEquals(this, other)) // сам с собой
+            {
+                return true;
+            }
+            return FirstName == other.FirstName;
+        }
+
+        public override int GetHashCode() // override т.к переопределяем стандартный метод GetHashCode
+        {
+            return FirstName.GetHashCode();
+        }
+
+        public override string ToString() // возврат строкового представления объектов типо GroupData
+        {
+            return "firstname=" + FirstName;
+        }
+
+        public int CompareTo(UserData other) // определили метод для сравнения IComparable<GroupData>
+        {
+            if (Object.ReferenceEquals(other, null))
+            {
+                return 1;
+            }
+            return FirstName.CompareTo(other.FirstName);
         }
 
         public string FirstName

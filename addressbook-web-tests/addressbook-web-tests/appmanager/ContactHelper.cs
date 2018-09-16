@@ -15,10 +15,20 @@ namespace WebAddressBookTests
         {
         }
 
-        /*public ContactHelper Modify(int v, UserData newData)
+        public List<UserData> GetUserList()
         {
-            return this;
-        }*/
+            List<UserData> users = new List<UserData>(); // пустой список элементов UserData
+            manager.Navi.GoToUserAddPage(); // переходим на страницу юзеров
+            ICollection<IWebElement> elements = driver.FindElements(By.ClassName("entry")); // коллекция элементов страницы по селектору
+            Console.Out.Write(elements.Count);
+            // преобразование IWebElement в GroupData
+            foreach (IWebElement element in elements)
+            {
+                UserData user = new UserData(element.Text);
+                users.Add(user);
+            }
+            return users; // вернули список
+        }
 
         public ContactHelper Create(UserData user)
         {
@@ -80,21 +90,31 @@ namespace WebAddressBookTests
 
         public ContactHelper FillUserForm(UserData user)
         {
-            driver.FindElement(By.Name("firstname")).Click();
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(user.FirstName);
-            driver.FindElement(By.Name("lastname")).Click();
-            driver.FindElement(By.Name("lastname")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(user.LastName);
-            driver.FindElement(By.Name("address")).Click();
-            driver.FindElement(By.Name("address")).Clear();
-            driver.FindElement(By.Name("address")).SendKeys(user.Address);
-            driver.FindElement(By.Name("home")).Click();
-            driver.FindElement(By.Name("home")).Clear();
-            driver.FindElement(By.Name("home")).SendKeys(user.Telephone);
-            driver.FindElement(By.Name("email")).Click();
-            driver.FindElement(By.Name("email")).Clear();
-            driver.FindElement(By.Name("email")).SendKeys(user.Email);
+            //driver.FindElement(By.Name("firstname")).Click();
+            //driver.FindElement(By.Name("firstname")).Clear();
+            //driver.FindElement(By.Name("firstname")).SendKeys(user.FirstName);
+            Type(By.Name("firstname"), user.FirstName);
+
+            //driver.FindElement(By.Name("lastname")).Click();
+            //driver.FindElement(By.Name("lastname")).Clear();
+            //driver.FindElement(By.Name("lastname")).SendKeys(user.LastName);
+            Type(By.Name("lastname"), user.LastName);
+
+            //driver.FindElement(By.Name("address")).Click();
+            //driver.FindElement(By.Name("address")).Clear();
+            //driver.FindElement(By.Name("address")).SendKeys(user.Address);
+            Type(By.Name("address"), user.Address);
+
+            //driver.FindElement(By.Name("home")).Click();
+            //driver.FindElement(By.Name("home")).Clear();
+            //driver.FindElement(By.Name("home")).SendKeys(user.Telephone);
+            Type(By.Name("home"), user.Telephone);
+
+            //driver.FindElement(By.Name("email")).Click();
+            //driver.FindElement(By.Name("email")).Clear();
+            //driver.FindElement(By.Name("email")).SendKeys(user.Email);
+            Type(By.Name("email"), user.Email);
+
             return this;
         }
 
