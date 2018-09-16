@@ -18,8 +18,9 @@ namespace WebAddressBookTests
         public List<UserData> GetUserList()
         {
             List<UserData> users = new List<UserData>(); // пустой список элементов UserData
-            manager.Navi.GoToUserAddPage(); // переходим на страницу юзеров
-            ICollection<IWebElement> elements = driver.FindElements(By.ClassName("entry")); // коллекция элементов страницы по селектору
+            manager.Navi.OpenHomePage(); // переходим на страницу юзеров
+            //ICollection<IWebElement> elements = driver.FindElements(By.Name("entry")); // коллекция элементов страницы по селектору
+            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name = 'entry']"));
             Console.Out.Write(elements.Count);
             // преобразование IWebElement в GroupData
             foreach (IWebElement element in elements)
@@ -54,7 +55,7 @@ namespace WebAddressBookTests
 
         public ContactHelper InitUserModification(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).FindElement(By.XPath("//img[@title='Edit']")).Click();
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).FindElement(By.XPath("//img[@title='Edit']")).Click();
             return this;
         }
 
@@ -84,7 +85,7 @@ namespace WebAddressBookTests
 
         public ContactHelper SelectUser(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click(); // передача индекса, а не конкретного элемента
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click(); // передача индекса, а не конкретного элемента
             return this;
         }
 

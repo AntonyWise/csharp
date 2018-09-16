@@ -14,11 +14,11 @@ namespace WebAddressBookTests
         [Test]
         public void UserCreationTest()
         {
-            UserData user = new UserData("antonyNEW");
-            user.LastName = "wise";
-            user.Address = "russia, spb";
-            user.Telephone = "89005555555";
-            user.Email = "test@mail.ru";
+            UserData user = new UserData("newUser");
+            //user.LastName = "wise";
+            //user.Address = "russia, spb";
+            //user.Telephone = "89005555555";
+            //user.Email = "test@mail.ru";
 
             List<UserData> oldUsers = appManager.User.GetUserList();
             appManager.User.Create(user);
@@ -28,7 +28,7 @@ namespace WebAddressBookTests
             //сортировка групп перед сравнением
             oldUsers.Sort();
             newUsers.Sort();
-            //Assert.AreEqual(oldUsers, newUsers); // ожидаемое и фактическое значение
+            Assert.AreEqual(oldUsers, newUsers); // ожидаемое и фактическое значение
             Console.Out.Write("user created");
         }
 

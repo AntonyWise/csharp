@@ -16,7 +16,7 @@ namespace WebAddressBookTests
         {
             if (appManager.User.UserIsAvailable())
             {
-                appManager.User.Remove(1);
+                appManager.User.Remove(0);
             }
             else
             {
@@ -27,7 +27,7 @@ namespace WebAddressBookTests
                 user.Email = "test@mail.ru";
                 appManager.User.Create(user);
 
-                appManager.User.Remove(1);
+                appManager.User.Remove(0);
             }
         }
 

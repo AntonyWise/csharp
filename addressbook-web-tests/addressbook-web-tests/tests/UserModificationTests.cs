@@ -21,7 +21,7 @@ namespace WebAddressBookTests
                 newUser.Address = "SPB";
                 newUser.Telephone = "8800";
                 newUser.Email = "test_new@mail.ru";
-                appManager.User.Modify(1, newUser);
+                appManager.User.Modify(0, newUser);
             }
             else
             {
@@ -37,7 +37,7 @@ namespace WebAddressBookTests
                 newUser.Address = "SPB";
                 newUser.Telephone = "8888";
                 newUser.Email = "test_new@mail.ru";
-                appManager.User.Modify(1, newUser);
+                appManager.User.Modify(0, newUser);
 
             }
         }

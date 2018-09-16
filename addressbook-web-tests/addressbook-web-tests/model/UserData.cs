@@ -9,7 +9,7 @@ namespace WebAddressBookTests
     public class UserData : IEquatable<UserData>, IComparable<UserData> // без модификатора public класс не доступен в ContactHelper
     {
         private string fFirstname;
-        private string fLastname = "";
+        private string fLastname;
         private string fAddress = "";
         private string fTelephone = "";
         private string fEmail = "";
@@ -18,6 +18,7 @@ namespace WebAddressBookTests
         public UserData(string firstname)
         {
             fFirstname = firstname;
+            //fLastname = lastname;
         }
 
         public bool Equals(UserData other) // стандартный метод сравнения
@@ -30,20 +31,20 @@ namespace WebAddressBookTests
             {
                 return true;
             }
-            return FirstName == other.FirstName;
+            return FirstName == other.FirstName; //&& LastName == other.LastName;
         }
 
         public override int GetHashCode() // override т.к переопределяем стандартный метод GetHashCode
         {
-            return FirstName.GetHashCode();
+            return FirstName.GetHashCode(); //+ LastName.GetHashCode();
         }
 
-        public override string ToString() // возврат строкового представления объектов типо GroupData
+        public override string ToString() // возврат строкового представления объектов типо UserData
         {
             return "firstname=" + FirstName;
         }
 
-        public int CompareTo(UserData other) // определили метод для сравнения IComparable<GroupData>
+        public int CompareTo(UserData other) // определили метод для сравнения IComparable<UserData>
         {
             if (Object.ReferenceEquals(other, null))
             {
