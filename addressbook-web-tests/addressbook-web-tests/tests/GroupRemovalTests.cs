@@ -16,17 +16,22 @@ namespace WebAddressBookTests
         {
             if (appManager.Groups.GroupIsAvailable())
             {
-                appManager.Groups.Remove(1);
+                List<GroupData> oldGroups = appManager.Groups.GetGroupList(); // читаем начальное количество элементов групп
+                appManager.Groups.Remove(0); // передаем 0, а не 1 т.к поправили XPath
                 Console.Out.Write("group deleted");
+                List<GroupData> newGroups = appManager.Groups.GetGroupList(); // читаем значение после выполнения удаления группы
+
+                oldGroups.RemoveAt(0); // удаляем элемент
+                Assert.AreEqual(oldGroups, newGroups); // сравнение списков
             }
-            else
+            else // если группы нет - создаем перед удалением
             {
                 GroupData group = new GroupData("name");
                 group.Header = "header";
                 group.Footer = "footer";
                 appManager.Groups.Create(group);
                 Console.Out.Write("group added");
-                appManager.Groups.Remove(1);
+                appManager.Groups.Remove(0);
                 Console.Out.Write("group deleted");
             }
         }

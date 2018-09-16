@@ -20,6 +20,20 @@ namespace WebAddressBookTests
         {
         }
 
+        public List<GroupData> GetGroupList()
+        {
+            List<GroupData> groups = new List<GroupData>(); // пустой список элементов GroupData
+            manager.Navi.GoToGroupsPage(); // переходим на страницу групп
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group")); // коллекция элементов страницы по селектору
+            // преобразование IWebElement в GroupData
+            foreach (IWebElement element in elements)
+            {
+                GroupData group = new GroupData(element.Text);
+                groups.Add(group);
+            }
+            return groups; // вернули список
+        }
+
         public GroupHelper Create(GroupData group)
         {
             manager.Navi.GoToGroupsPage();
@@ -58,7 +72,7 @@ namespace WebAddressBookTests
 
         public GroupHelper SelectGroup(int index)
         {
-                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click(); // передача индекса, а не конкретного элемента
+                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click(); // передача индекса, а не конкретного элемента
                 return this;
         }
 

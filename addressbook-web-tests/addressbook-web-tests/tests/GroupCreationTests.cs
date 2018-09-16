@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace WebAddressBookTests
@@ -17,7 +18,12 @@ namespace WebAddressBookTests
             group.Header = "header";
             group.Footer = "footer";
 
+            List<GroupData> oldGroups = appManager.Groups.GetGroupList();
             appManager.Groups.Create(group);
+
+            List<GroupData> newGroups = appManager.Groups.GetGroupList();
+            Assert.AreEqual(oldGroups.Count +1, newGroups.Count); // ожидаемое и фактическое значение
+            Console.Out.Write("group created");
 
             //navigationHelper.GoToGroupsPage();
             //groupHelper.InitGroupCreation();
@@ -35,8 +41,27 @@ namespace WebAddressBookTests
             group.Header = "";
             group.Footer = "";
 
+            List<GroupData> oldGroups = appManager.Groups.GetGroupList();
             appManager.Groups.Create(group);
+
+            List<GroupData> newGroups = appManager.Groups.GetGroupList();
+            Assert.AreEqual(oldGroups.Count + 1, newGroups.Count); // ожидаемое и фактическое значение
+            Console.Out.Write("empty group created");
         }
 
-     }
+        [Test]
+        public void BadNameGroupCreationTest() // баг пойман проверкой
+        {
+            GroupData group = new GroupData("a'a");
+            group.Header = "";
+            group.Footer = "";
+
+            List<GroupData> oldGroups = appManager.Groups.GetGroupList();
+            appManager.Groups.Create(group);
+
+            List<GroupData> newGroups = appManager.Groups.GetGroupList();
+            Assert.AreEqual(oldGroups.Count + 1, newGroups.Count); // ожидаемое и фактическое значение
+        }
+
+    }
 }

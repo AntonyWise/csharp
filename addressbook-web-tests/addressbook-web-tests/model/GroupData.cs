@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebAddressBookTests
 {
-    public class GroupData
+    public class GroupData : IEquatable<GroupData> // для объектов определена функция сравнения
     {
         private string name;
         private string header = "";
@@ -17,6 +17,25 @@ namespace WebAddressBookTests
         {
             this.name = name;
         }
+        
+        public bool Equals(GroupData other) // стандартный метод сравнения
+        {
+            if (Object.ReferenceEquals(other, null)) // c null
+            {
+                return false;
+            }
+            if (Object.ReferenceEquals(this, other)) // сам с собой
+            {
+                return true;
+            }
+            return Name == other.Name;
+        }
+
+        public int GetHashCode()
+        {
+            return Name.GetHashCode();
+        }
+
         // перегруженный конструктор
         /*public GroupData(string name, string header, string footer)
         {
@@ -42,5 +61,6 @@ namespace WebAddressBookTests
             get { return footer; }
             set { footer = value; }
         }
+
     }
 }

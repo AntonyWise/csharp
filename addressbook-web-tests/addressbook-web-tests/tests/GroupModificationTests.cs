@@ -19,7 +19,7 @@ namespace WebAddressBookTests
                 GroupData newData = new GroupData("modify1");
                 newData.Header = "modify2";
                 newData.Footer = "modify3";
-                appManager.Groups.Modify(1, newData);
+                appManager.Groups.Modify(0, newData);
             }
             else
             {
@@ -31,7 +31,7 @@ namespace WebAddressBookTests
                 GroupData newData = new GroupData("modify4");
                 newData.Header = "modify5";
                 newData.Footer = "modify6";
-                appManager.Groups.Modify(1, newData);
+                appManager.Groups.Modify(0, newData);
             }
         }
 
