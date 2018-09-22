@@ -17,19 +17,33 @@ namespace WebAddressBookTests
 
         public List<UserData> GetUserList()
         {
+            //IList<IWebElement> cells = row.FindElements(By.TagName("td"));
+            /*List<UserData> test = new List<UserData>(); // пустой список элементов UserData
+            manager.Navi.OpenHomePage();
+            ICollection<IWebElement> cells = driver.FindElements(By.TagName("td"));
+            Console.Out.Write(cells.Count);
+            foreach (IWebElement value in cells)
+            {
+                UserData user = new UserData(value.Text);
+                test.Add(user);
+            }
+            return test; // вернули список*/
+
             List<UserData> users = new List<UserData>(); // пустой список элементов UserData
             manager.Navi.OpenHomePage(); // переходим на страницу юзеров
-            //ICollection<IWebElement> elements = driver.FindElements(By.Name("entry")); // коллекция элементов страницы по селектору
             ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name = 'entry']"));
+            //ICollection<IWebElement> elements = driver.FindElements(By.TagName("td"));
             Console.Out.Write(elements.Count);
-            // преобразование IWebElement в GroupData
+            // преобразование IWebElement в UserData
             foreach (IWebElement element in elements)
             {
                 UserData user = new UserData(element.Text);
                 users.Add(user);
             }
-            return users; // вернули список
+            return users; //вернули список
+
         }
+
 
         public ContactHelper Create(UserData user)
         {

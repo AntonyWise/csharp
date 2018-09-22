@@ -21,6 +21,10 @@ namespace WebAddressBookTests
             List<GroupData> oldGroups = appManager.Groups.GetGroupList();
             appManager.Groups.Create(group);
 
+            //редко необходимая проверка
+            int count = appManager.Groups.GetGroupCount();
+            Assert.AreEqual(oldGroups.Count + 1, count);
+
             List<GroupData> newGroups = appManager.Groups.GetGroupList();
             oldGroups.Add(group); // добавляем для сравнения списков
             
@@ -50,6 +54,10 @@ namespace WebAddressBookTests
             List<GroupData> oldGroups = appManager.Groups.GetGroupList();
             appManager.Groups.Create(group);
 
+            //редко необходимая проверка
+            int count = appManager.Groups.GetGroupCount();
+            Assert.AreEqual(oldGroups.Count + 1, count);
+
             List<GroupData> newGroups = appManager.Groups.GetGroupList();
             oldGroups.Add(group); // добавляем для сравнения списков
             
@@ -70,6 +78,10 @@ namespace WebAddressBookTests
 
             List<GroupData> oldGroups = appManager.Groups.GetGroupList();
             appManager.Groups.Create(group);
+
+            //редко необходимая проверка
+            int count = appManager.Groups.GetGroupCount();
+            Assert.AreEqual(oldGroups.Count + 1, count);
 
             List<GroupData> newGroups = appManager.Groups.GetGroupList();
             oldGroups.Add(group); // добавляем для сравнения списков

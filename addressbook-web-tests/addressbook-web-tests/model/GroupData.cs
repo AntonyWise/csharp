@@ -8,14 +8,15 @@ namespace WebAddressBookTests
 {
     public class GroupData : IEquatable<GroupData>, IComparable<GroupData> //для объектов определена функция сравнения
     {
-        private string name;
-        private string header = "";
-        private string footer = "";
+        //private string name; убрали, т.к реализовали иначе get set
+        //private string header = "";
+        //private string footer = "";
 
         // конструктор
         public GroupData(string name)
         {
-            this.name = name;
+            //this.name = name; убрали, т.к реализовали иначе get set
+            Name = name;
         }
 
         //стандартный метод сравнения - добавляем!
@@ -61,23 +62,17 @@ namespace WebAddressBookTests
             this.footer = footer;
         }*/
 
-        public string Name
-        {
-            get { return name; }
+        public string Name { get; set; }
+        /*{
+            get { return name; } убрали, т.к реализовали иначе get set
             set { name = value; }
-        }
+        }*/
 
-        public string Header
-        {
-            get { return header; }
-            set { header = value; }
-        }
+        public string Header { get; set; }
 
-        public string Footer
-        {
-            get { return footer; }
-            set { footer = value; }
-        }
+        public string Footer { get; set; }
+
+        public string Id { get; set; }
 
     }
 }

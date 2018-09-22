@@ -20,19 +20,26 @@ namespace WebAddressBookTests
         {
         }
 
+        private List<GroupData> gropCache = null;
+
         public List<GroupData> GetGroupList()
         {
-            List<GroupData> groups = new List<GroupData>(); //пустой список элементов GroupData
-            manager.Navi.GoToGroupsPage(); //переходим на страницу групп
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group")); //коллекция элементов страницы по селектору
-            Console.Out.Write(elements.Count);
-            //преобразование IWebElement в GroupData
-            foreach (IWebElement element in elements)
+            if (gropCache == null)
             {
-                GroupData group = new GroupData(element.Text);
-                groups.Add(group);
+                gropCache = new List<GroupData>();
+                manager.Navi.GoToGroupsPage(); //переходим на страницу групп
+                ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group")); //коллекция элементов страницы по селектору
+                Console.Out.Write(elements.Count);
+                //преобразование IWebElement в GroupData
+                foreach (IWebElement element in elements)
+                {                   
+                    gropCache.Add(new GroupData(element.Text)
+                    {
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")//поиск элемента в элементе
+                    });
+                }
             }
-            return groups; //вернули список
+            return new List<GroupData> (gropCache); //вернули список
         }
 
         public GroupHelper Create(GroupData group)
@@ -68,6 +75,7 @@ namespace WebAddressBookTests
         public GroupHelper RemoveGroup() // возврат ссылки на сам метод для тестов
         {      
             driver.FindElement(By.Name("delete")).Click();
+            gropCache = null;
             return this;
         }
 
@@ -83,6 +91,11 @@ namespace WebAddressBookTests
             return IsElementPresent(By.XPath("//span[@class='group']"));
         }
 
+        public int GetGroupCount()
+        {
+            return driver.FindElements(By.CssSelector("span.group")).Count;
+        }
+
         public GroupHelper ReturnToGroupsPage()
         {
             driver.FindElement(By.LinkText("group page")).Click();
@@ -92,32 +105,17 @@ namespace WebAddressBookTests
         public GroupHelper SubmitGroupCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            gropCache = null;
             return this;
         }
 
         public GroupHelper FillGroupForm(GroupData group)
         {
-            //By locator = By.Name("group_name");
-            //string text = group.Name;
             Type(By.Name("group_name"), group.Name);
-
             Type(By.Name("group_header"), group.Header);
-            //driver.FindElement(By.Name("group_header")).Clear();
-            //driver.FindElement(By.Name("group_header")).SendKeys(group.Header);
             Type(By.Name("group_footer"), group.Footer);
-            //driver.FindElement(By.Name("group_footer")).Clear();
-            //driver.FindElement(By.Name("group_footer")).SendKeys(group.Footer);
             return this;
         }
-
-        /*public void Type(By locator, string text) // метод перенесен в базовый класс HelperBase
-        {
-            if (text != null)
-            {
-                driver.FindElement(locator).Clear();
-                driver.FindElement(locator).SendKeys(text);
-            }
-        }*/
 
         public GroupHelper InitGroupCreation()
         {
@@ -128,6 +126,7 @@ namespace WebAddressBookTests
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            gropCache = null;
             return this;
         }
 

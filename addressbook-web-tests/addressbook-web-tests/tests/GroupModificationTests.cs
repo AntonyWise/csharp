@@ -30,7 +30,12 @@ namespace WebAddressBookTests
                 newData.Footer = "modify3";
 
                 List<GroupData> oldGroups = appManager.Groups.GetGroupList();
+                GroupData oldData = oldGroups[0];
                 appManager.Groups.Modify(0, newData);
+
+                //редко необходимая проверка
+                int count = appManager.Groups.GetGroupCount();
+                Assert.AreEqual(oldGroups.Count, count);
 
                 List<GroupData> newGroups = appManager.Groups.GetGroupList();
                 oldGroups[0].Name = newData.Name;
@@ -40,6 +45,14 @@ namespace WebAddressBookTests
                 newGroups.Sort();
 
                 Assert.AreEqual(oldGroups, newGroups);
+
+                foreach (GroupData group in newGroups)
+                {
+                    if (group.Id == oldData.Id)
+                    {
+                        Assert.AreEqual(newData.Name, group.Name);
+                    }
+                }
             }
 
             /*if (appManager.Groups.GroupIsAvailable())
