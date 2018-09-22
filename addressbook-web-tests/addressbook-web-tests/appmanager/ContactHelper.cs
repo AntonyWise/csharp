@@ -19,23 +19,26 @@ namespace WebAddressBookTests
 
         public List<UserData> GetUserList()
         {
-
-            List<UserData> users = new List<UserData>(); //пустой список элементов UserData
-            manager.Navi.OpenHomePage(); //переходим на страницу юзеров
-            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name = 'entry']"));         
-            Console.Out.Write(elements.Count);
-            // преобразование IWebElement в UserData
-            foreach (IWebElement element in elements)
+            if (userCache == null)
             {
-                //для перебора значений элемента в ячейках!
-                IList<IWebElement> cells = element.FindElements(By.TagName("td"));
-                string firstname = cells[2].Text;
-                string lastname = cells[1].Text;
-                UserData user = new UserData(firstname, lastname);//конструктор и именем и фамилией в UserData
-                users.Add(user);
-            }
-            return users; //вернули список
+                userCache = new List<UserData>();
+                manager.Navi.OpenHomePage(); //переходим на страницу юзеров
+                ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name = 'entry']"));
+                Console.Out.Write(elements.Count);
 
+                // преобразование IWebElement в UserData
+                foreach (IWebElement element in elements)
+                {
+                    //для перебора значений элемента в ячейках!
+                    IList<IWebElement> cells = element.FindElements(By.TagName("td"));
+                    string firstname = cells[2].Text;
+                    string lastname = cells[1].Text;
+                    UserData user = new UserData(firstname, lastname);//конструктор с именем и фамилией в UserData
+                    userCache.Add(user);
+                }
+            }
+           
+            return new List<UserData>(userCache);//вернули копию списка
         }
 
         public ContactHelper Create(UserData user)
@@ -81,6 +84,8 @@ namespace WebAddressBookTests
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click(); // кнопка и нажатие
             //driver.FindElement(By.XPath("/html[1]/body[1]/div[1]/div[4]/form[2]/div[2]/input[1]"));
             driver.SwitchTo().Alert().Accept(); // закрытие диалогового окна
+            userCache = null;
+            Console.Out.Write("cache clear (RemoveUser)");
             return this;
         }
 
@@ -129,6 +134,8 @@ namespace WebAddressBookTests
         public ContactHelper SubmitUserCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            userCache = null; //чистим кэш
+            Console.Out.Write("cache clear (SubmitUserCreation)");
             return this;
         }
 
@@ -141,6 +148,8 @@ namespace WebAddressBookTests
         public ContactHelper SubmitUserModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            userCache = null;
+            Console.Out.Write("cache clear (SubmitUserModification)");
             return this;
         }
 
