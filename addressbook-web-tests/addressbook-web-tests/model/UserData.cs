@@ -17,7 +17,7 @@ namespace WebAddressBookTests
         //конструктор
         public UserData(string firstname)
         {
-            FirstName = firstname;
+            FirstName = firstname; //присваивание свойства, не поля
         }
 
         //перегруженный конструктор

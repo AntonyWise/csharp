@@ -33,12 +33,18 @@ namespace WebAddressBookTests
                     IList<IWebElement> cells = element.FindElements(By.TagName("td"));
                     string firstname = cells[2].Text;
                     string lastname = cells[1].Text;
-                    UserData user = new UserData(firstname, lastname);//конструктор с именем и фамилией в UserData
+                    UserData user = new UserData(firstname, lastname);//конструктор с именем и фамилией в UserData                 
+                    user.Id = element.FindElement(By.XPath("//input[@name='selected[]']")).GetAttribute("value");
                     userCache.Add(user);
                 }
             }
            
             return new List<UserData>(userCache);//вернули копию списка
+        }
+
+        public int GetUserCount()
+        {
+            return driver.FindElements(By.XPath("//tr[@name = 'entry']")).Count;
         }
 
         public ContactHelper Create(UserData user)

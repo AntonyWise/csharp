@@ -23,6 +23,10 @@ namespace WebAddressBookTests
             List<UserData> oldUsers = appManager.User.GetUserList();
             appManager.User.Create(user);
 
+            Console.Out.Write("add check");
+            int count = appManager.User.GetUserCount();
+            Assert.AreEqual(oldUsers.Count + 1, count); // ожидаемое и фактическое значение
+
             List<UserData> newUsers = appManager.User.GetUserList();
             oldUsers.Add(user); // добавляем для сравнения списков
             

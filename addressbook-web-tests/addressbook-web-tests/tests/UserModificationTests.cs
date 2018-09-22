@@ -32,7 +32,32 @@ namespace WebAddressBookTests
                 newUser.Address = "SPB";
                 newUser.Telephone = "8888";
                 newUser.Email = "test_new@mail.ru";
+
+                List<UserData> oldUsers = appManager.User.GetUserList();
+                UserData oldUser = oldUsers[0];
                 appManager.User.Modify(0, newUser);
+
+                Console.Out.Write("add check");
+                int count = appManager.User.GetUserCount();
+                Assert.AreEqual(oldUsers.Count, appManager.User.GetUserCount()); // ожидаемое и фактическое значение
+
+                List<UserData> newUsers = appManager.User.GetUserList();
+                oldUsers[0].LastName = newUser.LastName;
+                oldUsers[0].FirstName = newUser.FirstName;
+
+                oldUsers.Sort();
+                newUsers.Sort();
+
+                Assert.AreEqual(oldUsers, newUsers);
+
+                foreach (UserData user in newUsers)
+                {
+                    if (user.Id == oldUser.Id)
+                    {
+                        Assert.AreEqual(newUser.LastName, user.LastName);
+                        Assert.AreEqual(newUser.FirstName, user.FirstName);
+                    }
+                }
             }
 
             /*if (appManager.User.UserIsAvailable())

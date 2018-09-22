@@ -27,7 +27,24 @@ namespace WebAddressBookTests
             //если есть - удаляем
             else
             {
+
+                List<UserData> oldUsers = appManager.User.GetUserList(); 
+
                 appManager.User.Remove(0);
+                Console.Out.Write("add check");
+                int count = appManager.User.GetUserCount();
+                Assert.AreEqual(oldUsers.Count - 1, appManager.User.GetUserCount()); // ожидаемое и фактическое значение
+
+                List<UserData> newUsers = appManager.User.GetUserList();
+
+                UserData toBeRemoved = oldUsers[0];
+                oldUsers.RemoveAt(0);
+                Assert.AreEqual(oldUsers, newUsers);
+
+                foreach (UserData user in newUsers)
+                {
+                    Assert.AreNotEqual(user.Id, toBeRemoved.Id);
+                }
             }
 
             /*if (appManager.User.UserIsAvailable())
