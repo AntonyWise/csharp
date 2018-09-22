@@ -11,39 +11,32 @@ namespace WebAddressBookTests
     public class ContactHelper : HelperBase
     {
         public ContactHelper(ApplicationManager manager) 
-            : base(manager) // конструктор
+            : base(manager) //конструктор
         {
         }
 
+        private List<UserData> userCache = null;
+
         public List<UserData> GetUserList()
         {
-            //IList<IWebElement> cells = row.FindElements(By.TagName("td"));
-            /*List<UserData> test = new List<UserData>(); // пустой список элементов UserData
-            manager.Navi.OpenHomePage();
-            ICollection<IWebElement> cells = driver.FindElements(By.TagName("td"));
-            Console.Out.Write(cells.Count);
-            foreach (IWebElement value in cells)
-            {
-                UserData user = new UserData(value.Text);
-                test.Add(user);
-            }
-            return test; // вернули список*/
 
-            List<UserData> users = new List<UserData>(); // пустой список элементов UserData
-            manager.Navi.OpenHomePage(); // переходим на страницу юзеров
-            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name = 'entry']"));
-            //ICollection<IWebElement> elements = driver.FindElements(By.TagName("td"));
+            List<UserData> users = new List<UserData>(); //пустой список элементов UserData
+            manager.Navi.OpenHomePage(); //переходим на страницу юзеров
+            ICollection<IWebElement> elements = driver.FindElements(By.XPath("//tr[@name = 'entry']"));         
             Console.Out.Write(elements.Count);
             // преобразование IWebElement в UserData
             foreach (IWebElement element in elements)
             {
-                UserData user = new UserData(element.Text);
+                //для перебора значений элемента в ячейках!
+                IList<IWebElement> cells = element.FindElements(By.TagName("td"));
+                string firstname = cells[2].Text;
+                string lastname = cells[1].Text;
+                UserData user = new UserData(firstname, lastname);//конструктор и именем и фамилией в UserData
                 users.Add(user);
             }
             return users; //вернули список
 
         }
-
 
         public ContactHelper Create(UserData user)
         {

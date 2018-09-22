@@ -6,22 +6,28 @@ using System.Threading.Tasks;
 
 namespace WebAddressBookTests
 {
-    public class UserData // без модификатора public класс не доступен в ContactHelper
+    public class UserData : IEquatable<UserData>, IComparable<UserData>// без модификатора public класс не доступен в ContactHelper
     {
-        private string fFirstname;
-        private string fLastname;
-        private string fAddress = "";
-        private string fTelephone = "";
-        private string fEmail = "";
+        //private string fFirstname;
+        //private string fLastname;
+        //private string fAddress = "";
+        //private string fTelephone = "";
+        //private string fEmail = "";
 
-        // конструктор
+        //конструктор
         public UserData(string firstname)
         {
-            fFirstname = firstname;
-            //fLastname = lastname;
+            FirstName = firstname;
         }
 
-        /*public bool Equals(UserData other) // стандартный метод сравнения
+        //перегруженный конструктор
+        public UserData(string firstname, string lastname)
+        {
+            FirstName = firstname;
+            LastName = lastname;
+        }
+
+        public bool Equals(UserData other) // стандартный метод сравнения
         {
             if (Object.ReferenceEquals(other, null)) // c null
             {
@@ -44,44 +50,32 @@ namespace WebAddressBookTests
             return "lastname=" + LastName + " " + "firstname=" + FirstName;
         }
 
-        public int CompareTo(UserData other) // определили метод для сравнения IComparable<UserData>
+        public int CompareTo(UserData other)
         {
             if (Object.ReferenceEquals(other, null))
             {
                 return 1;
             }
-            return FirstName.CompareTo(other.FirstName);
-
-        }*/
-
-        public string FirstName
-        {
-            get { return fFirstname; }
-            set { fFirstname = value; }
+            if (FirstName.CompareTo(other.FirstName) == 0)
+            {
+                return LastName.CompareTo(other.LastName);
+            }
+            else
+            {
+                return FirstName.CompareTo(other.FirstName);
+            }
         }
 
-        public string LastName
-        {
-            get { return fLastname; }
-            set { fLastname = value; }
-        }
+        public string FirstName { get; set; }
 
-        public string Address
-        {
-            get { return fAddress; }
-            set { fAddress = value; }
-        }
+        public string LastName { get; set; }
 
-        public string Telephone
-        {
-            get { return fTelephone; }
-            set { fTelephone = value; }
-        }
+        public string Address { get; set; }
 
-        public string Email
-        {
-            get { return fEmail; }
-            set { fEmail = value; }
-        }
+        public string Telephone { get; set; }
+
+        public string Email { get; set; }
+
+        public string Id { get; set; }
     }
 }

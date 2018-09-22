@@ -25,12 +25,12 @@ namespace WebAddressBookTests
 
             List<UserData> newUsers = appManager.User.GetUserList();
             oldUsers.Add(user); // добавляем для сравнения списков
+            
             //сортировка групп перед сравнением
+            oldUsers.Sort();
+            newUsers.Sort();
 
-            //oldUsers.Sort();
-            //newUsers.Sort();
-
-            //Assert.AreEqual(oldUsers, newUsers); // ожидаемое и фактическое значение
+            Assert.AreEqual(oldUsers, newUsers); // ожидаемое и фактическое значение
             Console.Out.Write("user created");
         }
 
