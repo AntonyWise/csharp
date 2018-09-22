@@ -31,18 +31,19 @@ namespace WebAddressBookTests
             {
                 return true;
             }
-            return FirstName == other.FirstName; //&& LastName == other.LastName;
+            return FirstName == other.FirstName;
         }
 
         public override int GetHashCode() // override т.к переопределяем стандартный метод GetHashCode
         {
-            return FirstName.GetHashCode(); //+ LastName.GetHashCode();
+            return FirstName.GetHashCode();
         }
 
         public override string ToString() // возврат строкового представления объектов типо UserData
         {
             return "firstname=" + FirstName;
         }
+
 
         public int CompareTo(UserData other) // определили метод для сравнения IComparable<UserData>
         {

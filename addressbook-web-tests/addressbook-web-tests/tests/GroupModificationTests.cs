@@ -14,7 +14,33 @@ namespace WebAddressBookTests
         [Test]
         public void GroupModificationTest()
         {
-            if (appManager.Groups.GroupIsAvailable())
+            //группы нет - создаем
+            if (!appManager.Groups.GroupIsAvailable())
+            {
+                GroupData group = new GroupData("name");
+                group.Header = "header";
+                group.Footer = "footer";
+                appManager.Groups.Create(group);
+            }
+            else
+            {
+                //группа есть - изменяем
+                GroupData newData = new GroupData("modify1");
+                newData.Header = "modify2";
+                newData.Footer = "modify3";
+
+                List<GroupData> oldGroups = appManager.Groups.GetGroupList();
+                appManager.Groups.Modify(0, newData);
+
+                List<GroupData> newGroups = appManager.Groups.GetGroupList();
+                oldGroups[0].Name = newData.Name;
+                // сортировка групп перед сравнением
+                oldGroups.Sort();
+                newGroups.Sort();
+                Assert.AreEqual(oldGroups, newGroups);
+            }
+
+            /*if (appManager.Groups.GroupIsAvailable())
             {
                 GroupData newData = new GroupData("modify1");
                 newData.Header = "modify2";
@@ -50,7 +76,8 @@ namespace WebAddressBookTests
                 oldGroups.Sort();
                 newGroups.Sort();
                 Assert.AreEqual(oldGroups, newGroups); // ожидаемое и фактическое значение
-            }
+            }*/
+
         }
 
     }

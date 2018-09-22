@@ -14,7 +14,23 @@ namespace WebAddressBookTests
         [Test]
         public void UserRemovalTest()
         {
-            if (appManager.User.UserIsAvailable())
+            //если юзера нет - создаем
+            if (!appManager.User.UserIsAvailable())
+            {
+                UserData user = new UserData("CreateFromRemove");
+                user.LastName = "wise";
+                user.Address = "russia, spb";
+                user.Telephone = "89005555555";
+                user.Email = "test@mail.ru";
+                appManager.User.Create(user);
+            }
+            //если есть - удаляем
+            else
+            {
+                appManager.User.Remove(0);
+            }
+
+            /*if (appManager.User.UserIsAvailable())
             {
                 appManager.User.Remove(0);
             }
@@ -28,7 +44,7 @@ namespace WebAddressBookTests
                 appManager.User.Create(user);
 
                 appManager.User.Remove(0);
-            }
+            }*/
         }
 
     }
