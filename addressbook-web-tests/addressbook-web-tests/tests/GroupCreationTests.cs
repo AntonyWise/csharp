@@ -23,9 +23,11 @@ namespace WebAddressBookTests
 
             List<GroupData> newGroups = appManager.Groups.GetGroupList();
             oldGroups.Add(group); // добавляем для сравнения списков
-            // сортировка групп перед сравнением
+            
+            //сортировка групп перед сравнением
             oldGroups.Sort();
             newGroups.Sort();
+
             Assert.AreEqual(oldGroups, newGroups); // ожидаемое и фактическое значение
             Console.Out.Write("group created");
 
@@ -50,9 +52,11 @@ namespace WebAddressBookTests
 
             List<GroupData> newGroups = appManager.Groups.GetGroupList();
             oldGroups.Add(group); // добавляем для сравнения списков
-            // сортировка групп перед сравнением
+            
+            //сортировка групп перед сравнением
             oldGroups.Sort();
             newGroups.Sort();
+
             Assert.AreEqual(oldGroups, newGroups); // ожидаемое и фактическое значение
             Console.Out.Write("group created");
         }
@@ -69,9 +73,11 @@ namespace WebAddressBookTests
 
             List<GroupData> newGroups = appManager.Groups.GetGroupList();
             oldGroups.Add(group); // добавляем для сравнения списков
-            // сортировка групп перед сравнением
+
+            //сортировка групп перед сравнением
             oldGroups.Sort();
             newGroups.Sort();
+
             Assert.AreEqual(oldGroups, newGroups); // ожидаемое и фактическое значение
             Console.Out.Write("group created");
         }

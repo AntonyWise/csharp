@@ -22,17 +22,17 @@ namespace WebAddressBookTests
 
         public List<GroupData> GetGroupList()
         {
-            List<GroupData> groups = new List<GroupData>(); // пустой список элементов GroupData
-            manager.Navi.GoToGroupsPage(); // переходим на страницу групп
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group")); // коллекция элементов страницы по селектору
+            List<GroupData> groups = new List<GroupData>(); //пустой список элементов GroupData
+            manager.Navi.GoToGroupsPage(); //переходим на страницу групп
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group")); //коллекция элементов страницы по селектору
             Console.Out.Write(elements.Count);
-            // преобразование IWebElement в GroupData
+            //преобразование IWebElement в GroupData
             foreach (IWebElement element in elements)
             {
                 GroupData group = new GroupData(element.Text);
                 groups.Add(group);
             }
-            return groups; // вернули список
+            return groups; //вернули список
         }
 
         public GroupHelper Create(GroupData group)

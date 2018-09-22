@@ -34,9 +34,11 @@ namespace WebAddressBookTests
 
                 List<GroupData> newGroups = appManager.Groups.GetGroupList();
                 oldGroups[0].Name = newData.Name;
-                // сортировка групп перед сравнением
+                
+                //сортировка групп перед сравнением
                 oldGroups.Sort();
                 newGroups.Sort();
+
                 Assert.AreEqual(oldGroups, newGroups);
             }
 

@@ -44,7 +44,6 @@ namespace WebAddressBookTests
             return "firstname=" + FirstName;
         }
 
-
         public int CompareTo(UserData other) // определили метод для сравнения IComparable<UserData>
         {
             if (Object.ReferenceEquals(other, null))

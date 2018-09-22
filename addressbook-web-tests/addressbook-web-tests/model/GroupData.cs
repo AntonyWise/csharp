@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WebAddressBookTests
 {
-    public class GroupData : IEquatable<GroupData>, IComparable<GroupData> // для объектов определена функция сравнения
+    public class GroupData : IEquatable<GroupData>, IComparable<GroupData> //для объектов определена функция сравнения
     {
         private string name;
         private string header = "";
@@ -17,31 +17,34 @@ namespace WebAddressBookTests
         {
             this.name = name;
         }
-        
-        public bool Equals(GroupData other) // стандартный метод сравнения
+
+        //стандартный метод сравнения - добавляем!
+        public bool Equals(GroupData other)
         {
-            if (Object.ReferenceEquals(other, null)) // c null
+            if (Object.ReferenceEquals(other, null)) //объект c которым сравниваем = null
             {
                 return false;
             }
-            if (Object.ReferenceEquals(this, other)) // сам с собой
+            if (Object.ReferenceEquals(this, other)) //объект с которым сравниваем он же (совпадают)
             {
                 return true;
             }
             return Name == other.Name;
         }
-
-        public override int GetHashCode() // override т.к переопределяем стандартный метод GetHashCode
+        
+        //стандартный метод сравнения - добавляем!
+        public override int GetHashCode() //override т.к переопределяем стандартный метод GetHashCode
         {
-            return Name.GetHashCode();
+            return Name.GetHashCode(); //без оптимизации можно вернуть return = 0;
         }
 
-        public override string ToString() // возврат строкового представления объектов типо GroupData
+        //переопределение
+        public override string ToString() //возврат строкового представления объектов типо GroupData
         {
             return "name=" + Name;
         }
 
-        public int CompareTo(GroupData other) // определили метод для сравнения IComparable<GroupData>
+        public int CompareTo(GroupData other) //определили метод для сравнения IComparable<GroupData>
         {
             if (Object.ReferenceEquals(other, null))
             {
