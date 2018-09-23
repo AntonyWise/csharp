@@ -21,7 +21,18 @@ namespace WebAddressBookTests
             Assert.AreEqual(fromTable.Address, fromForm.Address);
             Assert.AreEqual(fromTable.Email, fromForm.Email);
             Assert.AreEqual(fromTable.AllPhones, fromForm.AllPhones); //извлекаем все телефоны
-
         }
+
+        [Test]
+        public void TestDetailsInformation()
+        {
+            UserData fromTable = appManager.User.GetContactInformationFromTable(0); //метод получения информации о контактах
+            UserData fromForm = appManager.User.GetContactInformationFromDetails(0); //берем контакт с индексом = 0
+
+            Assert.AreEqual(fromTable, fromForm);
+            Assert.AreEqual(fromTable.Address, fromForm.Address);
+            Assert.AreEqual(fromTable.Email, fromForm.Email);
+        }
+
     }
 }

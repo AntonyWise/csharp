@@ -83,10 +83,24 @@ namespace WebAddressBookTests
             };
         }
 
+        public UserData GetContactInformationFromDetails(int index)
+        {
+            //manager.Navi.OpenHomePage();
+            //_InitUserDetails(0);
+            return null;
+        }
+
+        public void _InitUserDetails(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[6] //details
+                .FindElement(By.TagName("a")).Click();
+        }
+
         public void _InitUserModification(int index)
         {
             driver.FindElements(By.Name("entry"))[index]
-                .FindElements(By.TagName("td"))[7]
+                .FindElements(By.TagName("td"))[7] //edit
                 .FindElement(By.TagName("a")).Click();
         }
 
