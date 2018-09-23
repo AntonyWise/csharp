@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using OpenQA.Selenium;
+using System.Text.RegularExpressions;
 
 namespace WebAddressBookTests
 {
@@ -87,6 +88,14 @@ namespace WebAddressBookTests
             driver.FindElements(By.Name("entry"))[index]
                 .FindElements(By.TagName("td"))[7]
                 .FindElement(By.TagName("a")).Click();
+        }
+
+        public int GetNumberOfSearchResults()
+        {
+            manager.Navi.OpenHomePage();
+            string text = driver.FindElement(By.TagName("label")).Text;
+            Match m = new Regex(@"\d+").Match(text);
+            return Int32.Parse(m.Value);
         }
 
         public int GetUserCount()

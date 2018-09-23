@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Text.RegularExpressions; //for Regex
+
 namespace WebAddressBookTests
 {
     public class UserData : IEquatable<UserData>, IComparable<UserData>// без модификатора public класс не доступен в ContactHelper
@@ -103,7 +105,8 @@ namespace WebAddressBookTests
         {
             if (telephone == null)
                 return "";
-            return telephone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+            //return telephone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+            return Regex.Replace(telephone, "[ -()]", "") + "\r\n";
         }
     }
 }
