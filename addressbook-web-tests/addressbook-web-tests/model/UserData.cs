@@ -14,6 +14,8 @@ namespace WebAddressBookTests
         //private string fTelephone = "";
         //private string fEmail = "";
 
+        private string allPhones;
+
         //конструктор
         public UserData(string firstname)
         {
@@ -26,6 +28,9 @@ namespace WebAddressBookTests
             FirstName = firstname;
             LastName = lastname;
         }
+
+        //пустой конструктор
+        public UserData() { }
 
         public bool Equals(UserData other) // стандартный метод сравнения
         {
@@ -78,5 +83,27 @@ namespace WebAddressBookTests
 
         public string Id { get; set; }
 
+        //
+        public string AllPhones
+        {
+            get
+            {
+                if (allPhones != null || allPhones == "") //поле установлено т.е != null
+                    return allPhones;
+                else
+                    return (CleanUp(Telephone)).Trim(); //при наличии mobilePhone + homePhone + workPhone + Trim удаляем пробелы
+            }
+            set
+            {
+                allPhones = value;
+            }
+        }
+
+        private string CleanUp(string telephone)
+        {
+            if (telephone == null)
+                return "";
+            return telephone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+        }
     }
 }

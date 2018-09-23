@@ -12,11 +12,11 @@ using OpenQA.Selenium.Support.UI;
 
 namespace WebAddressBookTests
 {
-    public class GroupHelper : HelperBase // видимость public + все методы в хелпере так же public !
+    public class GroupHelper : HelperBase //видимость public + все методы в хелпере так же public !
     {
 
         public GroupHelper(ApplicationManager manager) 
-            : base(manager) // конструктор
+            : base(manager) //конструктор
         {
         }
 
@@ -33,11 +33,27 @@ namespace WebAddressBookTests
                 //преобразование IWebElement в GroupData
                 foreach (IWebElement element in elements)
                 {                   
-                    gropCache.Add(new GroupData(element.Text)
+                    gropCache.Add(new GroupData(element.Text) //new GroupData(null) либо конструктор без параметров
                     {
-                        Id = element.FindElement(By.TagName("input")).GetAttribute("value")//поиск элемента в элементе
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value") //поиск элемента в элементе
                     });
                 }
+
+                string allGroupNames = driver.FindElement(By.CssSelector("div#content form")).Text;
+                string[] parts = allGroupNames.Split('\n');
+                int shift = gropCache.Count - parts.Length;
+                for (int i = 0; i < gropCache.Count; i++)
+                {
+                    if (i < shift)
+                    {
+                        gropCache[i].Name = "";
+                    }
+                    else
+                    {
+                        gropCache[i].Name = parts[i-shift].Trim(); //удаляем пробелы ф-ция Trim()
+                    }
+                }
+
             }
             return new List<GroupData> (gropCache); //вернули список
         }

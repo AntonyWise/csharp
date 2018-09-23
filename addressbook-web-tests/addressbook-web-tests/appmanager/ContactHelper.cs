@@ -42,6 +42,53 @@ namespace WebAddressBookTests
             return new List<UserData>(userCache);//вернули копию списка
         }
 
+        public UserData GetContactInformationFromTable(int index)
+        {
+            manager.Navi.OpenHomePage();
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"));
+            string lastname = cells[1].Text;
+            string firstname = cells[2].Text;
+            string address = cells[3].Text;
+            string email = cells[4].Text;
+            string allPhones = cells[5].Text;
+
+            return new UserData(firstname, lastname)
+            {
+                Address = address,
+                Email = email,
+                AllPhones = allPhones
+            };
+        }
+
+        public UserData GetContactInformationFromEditForm(int index)
+        {
+            manager.Navi.OpenHomePage();
+            _InitUserModification(0);
+
+            string firstname = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastname = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            string telephone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string email = driver.FindElement(By.Name("email")).GetAttribute("value");
+            //string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            //string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+
+            return new UserData(firstname, lastname)
+            {
+                Address = address,
+                Telephone = telephone,
+                Email = email
+            };
+        }
+
+        public void _InitUserModification(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"))[7]
+                .FindElement(By.TagName("a")).Click();
+        }
+
         public int GetUserCount()
         {
             return driver.FindElements(By.XPath("//tr[@name = 'entry']")).Count;

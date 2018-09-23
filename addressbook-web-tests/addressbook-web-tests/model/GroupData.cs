@@ -30,7 +30,7 @@ namespace WebAddressBookTests
             {
                 return true;
             }
-            return Name == other.Name;
+            return Name.Equals(other.Name); // return Name == other.Name
         }
         
         //стандартный метод сравнения - добавляем!

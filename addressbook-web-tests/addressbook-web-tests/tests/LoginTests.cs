@@ -23,7 +23,7 @@ namespace WebAddressBookTests
 
             // проверка, что зашли под учеткой
             Assert.IsTrue(appManager.Auth.IsLoggedIn(account));
-            Console.Out.Write("пароль админа");
+            Console.Out.Write("pwd admin");
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace WebAddressBookTests
 
             // проверка, что зашли под учеткой
             Assert.IsFalse(appManager.Auth.IsLoggedIn(account));
-            Console.Out.Write("пароль не админа");
+            Console.Out.Write("pwd not admin");
         }
     }
 }
