@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using OpenQA.Selenium;
 using System.Text.RegularExpressions;
+using System.Text.RegularExpressions; //for Regex
 
 namespace WebAddressBookTests
 {
@@ -41,6 +42,26 @@ namespace WebAddressBookTests
             }
            
             return new List<UserData>(userCache);//вернули копию списка
+        }
+
+        public UserData GetContactInformationFromSmallTable(int index)
+        {
+            manager.Navi.OpenHomePage();
+            IList<IWebElement> cells = driver.FindElements(By.Name("entry"))[index]
+                .FindElements(By.TagName("td"));
+            string lastname = cells[1].Text;
+            string firstname = cells[2].Text;
+            //string address = cells[3].Text;
+            string email = cells[4].Text;
+            //string allPhones = cells[5].Text;
+
+            string fullname = firstname + " " + lastname;
+
+            return new UserData()
+            {
+                FullName = fullname,
+                Email = email
+            };
         }
 
         public UserData GetContactInformationFromTable(int index)
@@ -79,15 +100,38 @@ namespace WebAddressBookTests
             {
                 Address = address,
                 Telephone = telephone,
-                Email = email
+                Email = email,
             };
         }
 
         public UserData GetContactInformationFromDetails(int index)
         {
-            //manager.Navi.OpenHomePage();
-            //_InitUserDetails(0);
-            return null;
+            manager.Navi.OpenHomePage();
+            _InitUserDetails(0);
+
+            string fullname = driver.FindElement(By.XPath("//*[@id='content']/child::b[1]")).Text;
+            //string address = driver.FindElement(By.XPath("//*[@id='content']/child::text[2]")).Text; //?
+            string email = driver.FindElement(By.XPath("//*[@id='content']/child::a[1]")).Text;
+            string alltext = driver.FindElement(By.XPath("//*[@id='content']")).Text;
+            //Console.Out.Write(fullname);
+            //Console.Out.Write(address);
+            //Console.Out.Write(email);
+            Console.Out.Write(alltext);
+            Console.Out.Write(alltext.Length);
+
+            /*string pattern = "[ :H]";
+            foreach (char ch in alltext)
+            {
+                Console.Out.Write(Regex.Replace(ch.ToString(), pattern, String.Empty));
+            }*/
+
+            string fields = (Regex.Replace(alltext, "[ :H]", ""));
+
+            return new UserData()
+            {
+                FullName = fullname,
+                Email = email
+            };
         }
 
         public void _InitUserDetails(int index)

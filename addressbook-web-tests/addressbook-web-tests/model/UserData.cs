@@ -85,6 +85,8 @@ namespace WebAddressBookTests
 
         public string Id { get; set; }
 
+        public string FullName { get; set; } //без private поля
+
         //
         public string AllPhones
         {
