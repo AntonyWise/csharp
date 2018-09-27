@@ -25,6 +25,19 @@ namespace WebAddressBookTests
             //appManager.Auth.Login(new AccountData("admin", "secret")); // всегда логинимся
         }
 
+        public static Random rnd = new Random(); //public для доступа в методе
+
+        public static string GenerateRandomString(int max)
+        {
+            int l = Convert.ToInt32(rnd.NextDouble() * max);
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < l; i++)
+            {
+                builder.Append(Convert.ToChar(32 + Convert.ToInt32(rnd.NextDouble() * 223))); //коды символов ASCII
+            }
+            return builder.ToString();
+        }
+
         // перемещаем останов в TestSuiteFixture
         /*[TearDown]
         public void TearDownTest()

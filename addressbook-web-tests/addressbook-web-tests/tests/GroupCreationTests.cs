@@ -11,45 +11,26 @@ namespace WebAddressBookTests
     [TestFixture]
     public class GroupCreationTests : AuthTestBase
     {
-        [Test]
-        public void GroupCreationTest()
+        public static IEnumerable<GroupData> RandomGroupDataProvider() //static для NUnit
         {
-            GroupData group = new GroupData("name");
-            group.Header = "header";
-            group.Footer = "footer";
-
-            List<GroupData> oldGroups = appManager.Groups.GetGroupList();
-            appManager.Groups.Create(group);
-
-            //редко необходимая проверка
-            int count = appManager.Groups.GetGroupCount();
-            Assert.AreEqual(oldGroups.Count + 1, count);
-
-            List<GroupData> newGroups = appManager.Groups.GetGroupList();
-            oldGroups.Add(group); // добавляем для сравнения списков
-            
-            //сортировка групп перед сравнением
-            oldGroups.Sort();
-            newGroups.Sort();
-
-            Assert.AreEqual(oldGroups, newGroups); // ожидаемое и фактическое значение
-            Console.Out.Write("group created");
-
-            //navigationHelper.GoToGroupsPage();
-            //groupHelper.InitGroupCreation();
-            //FillGroupForm(new GroupData("name", "header", "footer"));
-            //groupHelper.FillGroupForm(group);
-            //groupHelper.SubmitGroupCreation();
-            //groupHelper.ReturnToGroupsPage();
-            //driver.FindElement(By.LinkText("Logout")).Click();
+            List<GroupData> groups = new List<GroupData>();
+            for (int i = 0; i < 5; i++ )
+            {
+                groups.Add(new GroupData(GenerateRandomString(30)) //30 длина рандомной строки
+                {
+                    Header = GenerateRandomString(100),
+                    Footer = GenerateRandomString(100)
+                });
+            }
+            return groups;
         }
 
-        [Test]
-        public void GroupCreationTestEmpty()
+        [Test, TestCaseSource("RandomGroupDataProvider")] //данные для теста из другого метода
+        public void GroupCreationTest(GroupData group)
         {
-            GroupData group = new GroupData("");
-            group.Header = "";
-            group.Footer = "";
+            /*GroupData group = new GroupData("name");
+            group.Header = "header";
+            group.Footer = "footer";*/
 
             List<GroupData> oldGroups = appManager.Groups.GetGroupList();
             appManager.Groups.Create(group);

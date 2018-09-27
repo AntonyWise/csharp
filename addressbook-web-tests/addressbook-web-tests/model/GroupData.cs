@@ -42,7 +42,7 @@ namespace WebAddressBookTests
         //переопределение
         public override string ToString() //возврат строкового представления объектов типо GroupData
         {
-            return "name=" + Name;
+            return "name=" + Name + "\nheader=" + Header + "\nfooter=" + Footer;
         }
 
         public int CompareTo(GroupData other) //определили метод для сравнения IComparable<GroupData>
