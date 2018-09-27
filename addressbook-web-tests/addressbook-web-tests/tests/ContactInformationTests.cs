@@ -32,8 +32,6 @@ namespace WebAddressBookTests
 
             Assert.AreEqual(fromSmallTable, fromForm);
             Console.Out.Write("fromSmallTable = fromForm");
-            //Assert.AreEqual(fromTable.Address, fromForm.Address);
-            //Assert.AreEqual(fromTable.Email, fromForm.Email);
         }
 
     }

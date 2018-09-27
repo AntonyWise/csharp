@@ -117,15 +117,13 @@ namespace WebAddressBookTests
             //Console.Out.Write(address);
             //Console.Out.Write(email);
             Console.Out.Write(alltext);
-            Console.Out.Write(alltext.Length);
 
             /*string pattern = "[ :H]";
             foreach (char ch in alltext)
             {
                 Console.Out.Write(Regex.Replace(ch.ToString(), pattern, String.Empty));
             }*/
-
-            string fields = (Regex.Replace(alltext, "[ :H]", ""));
+            //string fields = (Regex.Replace(alltext, "[ :H]", ""));
 
             return new UserData()
             {
