@@ -54,7 +54,7 @@ namespace WebAddressBookTests
 
         public override string ToString() // возврат строкового представления объектов типо UserData
         {
-            return "lastname=" + LastName + " " + "firstname=" + FirstName;
+            return "lastname=" + LastName + "\nfirstname=" + FirstName + "\naddress=" + Address + "\nemail=" + Email + "\ntelephone=" + Telephone;
         }
 
         public int CompareTo(UserData other)

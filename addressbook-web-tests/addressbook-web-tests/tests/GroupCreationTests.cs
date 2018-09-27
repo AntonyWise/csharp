@@ -16,10 +16,10 @@ namespace WebAddressBookTests
             List<GroupData> groups = new List<GroupData>();
             for (int i = 0; i < 5; i++ )
             {
-                groups.Add(new GroupData(GenerateRandomString(30)) //30 длина рандомной строки
+                groups.Add(new GroupData(GenerateRandomString(12)) //30 длина рандомной строки
                 {
-                    Header = GenerateRandomString(100),
-                    Footer = GenerateRandomString(100)
+                    Header = GenerateRandomString(12),
+                    Footer = GenerateRandomString(12)
                 });
             }
             return groups;

@@ -11,11 +11,27 @@ namespace WebAddressBookTests
     [TestFixture]
     public class UserCreationTests : AuthTestBase // не от TestBase
     {
-        [Test]
-        public void UserCreationTest()
+        public static IEnumerable<UserData> RandomGroupDataProvider() //static для NUnit
         {
-            UserData user = new UserData("firstname");
-            user.LastName = "lastname";
+            List<UserData> users = new List<UserData>();
+            for (int i = 0; i < 5; i++)
+            {
+                users.Add(new UserData(GenerateRandomString(12)) //30 длина рандомной строки
+                {
+                    LastName = GenerateRandomString(12),
+                    Address = GenerateRandomString(12),
+                    Email = GenerateRandomString(12),
+                    AllPhones = GenerateRandomString(12)
+                });
+            }
+            return users;
+        }
+
+        [Test, TestCaseSource("RandomGroupDataProvider")]
+        public void UserCreationTest(UserData user)
+        {
+            //UserData user = new UserData("firstname");
+            //user.LastName = "lastname";
             //user.Address = "russia, spb";
             //user.Telephone = "89005555555";
             //user.Email = "test@mail.ru";
