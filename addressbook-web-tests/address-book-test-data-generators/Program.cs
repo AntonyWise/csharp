@@ -19,9 +19,9 @@ namespace address_book_test_data_generators
 
             //Console.Out.Write("test");
 
-            int count = Convert.ToInt32(args[0]);
-            StreamWriter writer = new StreamWriter(args[1]);
-            string format = args[2]; //у меня ошибка args[3]
+            int count = Convert.ToInt32(args[0]); //первый параметр, кол-во данных
+            StreamWriter writer = new StreamWriter(args[1]); //второй, откуда
+            string format = args[2]; //у меня ошибка args[3] //третий, формат
 
             List<GroupData> groups = new List<GroupData>();
 
