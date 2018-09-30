@@ -44,7 +44,7 @@ namespace WebAddressBookTests
                 //driver.Close();
                 driver.Quit();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //
             }

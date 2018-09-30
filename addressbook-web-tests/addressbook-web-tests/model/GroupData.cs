@@ -19,6 +19,9 @@ namespace WebAddressBookTests
             Name = name;
         }
 
+        public GroupData() //конструктор без параметров для 6.2
+        { }
+
         //стандартный метод сравнения - добавляем!
         public bool Equals(GroupData other)
         {

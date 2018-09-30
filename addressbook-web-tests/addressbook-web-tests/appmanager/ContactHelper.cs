@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using OpenQA.Selenium;
-using System.Text.RegularExpressions;
 using System.Text.RegularExpressions; //for Regex
 
 namespace WebAddressBookTests

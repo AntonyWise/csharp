@@ -5,6 +5,10 @@ using System.Threading;
 
 using System.Collections.Generic;
 using NUnit.Framework;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace WebAddressBookTests
 {
@@ -25,7 +29,39 @@ namespace WebAddressBookTests
             return groups;
         }
 
-        [Test, TestCaseSource("RandomGroupDataProvider")] //данные для теста из другого метода
+        public static IEnumerable<GroupData> GroupDataFromCsvFile()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            string[] lines = File.ReadAllLines(@"groups.csv");
+            foreach (string l in lines)
+            {
+                string[] parts = l.Split(',');
+                groups.Add(new GroupData(parts[0])
+                {
+                    Header = parts[1],
+                    Footer = parts[2]
+                });
+            }
+            return groups;
+        }
+
+        public static IEnumerable<GroupData> GroupDataFromXmlFile()
+        {
+            //List<GroupData> groups = new List<GroupData>();
+
+            return (List<GroupData>) //приведение типа к List<GroupData>
+                new XmlSerializer(typeof(List<GroupData>)).Deserialize(new StreamReader(@"groups.xml"));
+
+            //return groups;
+        }
+
+        public static IEnumerable<GroupData> GroupDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<GroupData>>(
+                File.ReadAllText(@"groups.json"));
+        }
+
+        [Test, TestCaseSource("GroupDataFromJsonFile")] //данные для теста из другого метода
         public void GroupCreationTest(GroupData group)
         {
             /*GroupData group = new GroupData("name");
