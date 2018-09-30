@@ -32,7 +32,8 @@ namespace WebAddressBookTests
         }
 
         //пустой конструктор
-        public UserData() { }
+        public UserData()
+        { }
 
         public bool Equals(UserData other) // стандартный метод сравнения
         {

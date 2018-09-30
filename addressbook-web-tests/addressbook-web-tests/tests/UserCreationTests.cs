@@ -4,7 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.Collections.Generic;
 using NUnit.Framework;
+using System.IO;
+using System.Xml;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
+
 
 namespace WebAddressBookTests
 {
@@ -27,7 +33,23 @@ namespace WebAddressBookTests
             return users;
         }
 
-        [Test, TestCaseSource("RandomGroupDataProvider")]
+        public static IEnumerable<UserData> UserDataFromXmlFile()
+        {
+            //List<GroupData> groups = new List<GroupData>();
+
+            return (List<UserData>) //приведение типа к List<UserData>
+                new XmlSerializer(typeof(List<GroupData>)).Deserialize(new StreamReader(@"users.xml"));
+
+            //return groups;
+        }
+
+        public static IEnumerable<UserData> UserDataFromJsonFile()
+        {
+            return JsonConvert.DeserializeObject<List<UserData>>(
+                File.ReadAllText(@"users.json"));
+        }
+
+        [Test, TestCaseSource("UserDataFromJsonFile")]
         public void UserCreationTest(UserData user)
         {
             //UserData user = new UserData("firstname");

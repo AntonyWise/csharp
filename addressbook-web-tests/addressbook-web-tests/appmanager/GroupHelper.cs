@@ -20,20 +20,20 @@ namespace WebAddressBookTests
         {
         }
 
-        private List<GroupData> gropCache = null;
+        private List<GroupData> groupCache = null;
 
         public List<GroupData> GetGroupList()
         {
-            if (gropCache == null)
+            if (groupCache == null)
             {
-                gropCache = new List<GroupData>();
+                groupCache = new List<GroupData>();
                 manager.Navi.GoToGroupsPage(); //переходим на страницу групп
                 ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("span.group")); //коллекция элементов страницы по селектору
                 Console.Out.Write(elements.Count);
                 //преобразование IWebElement в GroupData
                 foreach (IWebElement element in elements)
                 {                   
-                    gropCache.Add(new GroupData(element.Text) //new GroupData(null) либо конструктор без параметров
+                    groupCache.Add(new GroupData(element.Text) //new GroupData(null) либо конструктор без параметров
                     {
                         Id = element.FindElement(By.TagName("input")).GetAttribute("value") //поиск элемента в элементе
                     });
@@ -41,21 +41,21 @@ namespace WebAddressBookTests
 
                 string allGroupNames = driver.FindElement(By.CssSelector("div#content form")).Text;
                 string[] parts = allGroupNames.Split('\n');
-                int shift = gropCache.Count - parts.Length;
-                for (int i = 0; i < gropCache.Count; i++)
+                int shift = groupCache.Count - parts.Length;
+                for (int i = 0; i < groupCache.Count; i++)
                 {
                     if (i < shift)
                     {
-                        gropCache[i].Name = "";
+                        groupCache[i].Name = "";
                     }
                     else
                     {
-                        gropCache[i].Name = parts[i-shift].Trim(); //удаляем пробелы ф-ция Trim()
+                        groupCache[i].Name = parts[i-shift].Trim(); //удаляем пробелы ф-ция Trim()
                     }
                 }
 
             }
-            return new List<GroupData> (gropCache); //вернули список
+            return new List<GroupData> (groupCache); //вернули список
         }
 
         public GroupHelper Create(GroupData group)
@@ -91,7 +91,7 @@ namespace WebAddressBookTests
         public GroupHelper RemoveGroup() // возврат ссылки на сам метод для тестов
         {      
             driver.FindElement(By.Name("delete")).Click();
-            gropCache = null;
+            groupCache = null;
             return this;
         }
 
@@ -121,7 +121,7 @@ namespace WebAddressBookTests
         public GroupHelper SubmitGroupCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
-            gropCache = null;
+            groupCache = null;
             return this;
         }
 
@@ -142,7 +142,7 @@ namespace WebAddressBookTests
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
-            gropCache = null;
+            groupCache = null;
             return this;
         }
 
