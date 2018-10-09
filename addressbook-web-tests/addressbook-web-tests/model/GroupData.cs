@@ -4,8 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using LinqToDB.Mapping;
+
 namespace WebAddressBookTests
 {
+    [Table(Name = "group_list")]
+
     public class GroupData : IEquatable<GroupData>, IComparable<GroupData> //для объектов определена функция сравнения
     {
         //private string name; убрали, т.к реализовали иначе get set
@@ -65,17 +69,30 @@ namespace WebAddressBookTests
             this.footer = footer;
         }*/
 
+        [Column(Name = "group_name"), NotNull] //значение NotNull т.к поле в таблице != 0
         public string Name { get; set; }
         /*{
             get { return name; } убрали, т.к реализовали иначе get set
             set { name = value; }
         }*/
 
+        [Column(Name = "group_header"), NotNull]
         public string Header { get; set; }
 
+        [Column(Name = "group_footer"), NotNull]
         public string Footer { get; set; }
 
+        [Column(Name = "group_id"), PrimaryKey, Identity]
         public string Id { get; set; }
+
+        public static List<GroupData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from g in db.Groups select g).ToList();
+                //db.Close(); //используя using метод выполняется автоматически
+            }
+        }
 
     }
 }

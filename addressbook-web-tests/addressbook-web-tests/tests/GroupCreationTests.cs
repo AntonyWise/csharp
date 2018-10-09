@@ -9,6 +9,7 @@ using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace WebAddressBookTests
 {
@@ -18,7 +19,7 @@ namespace WebAddressBookTests
         public static IEnumerable<GroupData> RandomGroupDataProvider() //static для NUnit
         {
             List<GroupData> groups = new List<GroupData>();
-            for (int i = 0; i < 5; i++ )
+            for (int i = 0; i < 5; i++)
             {
                 groups.Add(new GroupData(GenerateRandomString(12)) //30 длина рандомной строки
                 {
@@ -77,7 +78,7 @@ namespace WebAddressBookTests
 
             List<GroupData> newGroups = appManager.Groups.GetGroupList();
             oldGroups.Add(group); // добавляем для сравнения списков
-            
+
             //сортировка групп перед сравнением
             oldGroups.Sort();
             newGroups.Sort();
@@ -109,6 +110,27 @@ namespace WebAddressBookTests
 
             Assert.AreEqual(oldGroups, newGroups); // ожидаемое и фактическое значение
             Console.Out.Write("group created");
+        }
+
+        [Test]
+        public void TestDBConnect()
+        {
+            DateTime start = DateTime.Now;
+            List<GroupData> fromUI = appManager.Groups.GetGroupList();
+            DateTime end = DateTime.Now;
+
+            Console.Out.Write(end.Subtract(start)); //из конца вычитаем начало интервала
+
+            start = DateTime.Now;
+            /*using (AddressBookDB db = new AddressBookDB()) //перенесли метод в GroupData
+            {
+                return List < GroupData > fromDB = (from g in db.Groups select g).ToList();
+                //db.Close(); //используя using метод выполняется автоматически
+            }*/
+            List<GroupData> fromDB = GroupData.GetAll();
+            end = DateTime.Now;
+
+            Console.Out.Write(end.Subtract(start));
         }
 
     }
