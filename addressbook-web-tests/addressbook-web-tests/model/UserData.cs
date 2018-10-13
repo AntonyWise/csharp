@@ -97,11 +97,14 @@ namespace WebAddressBookTests
 
         public string FullName { get; set; } //без private поля
 
+        [Column(Name = "deprecated")]
+        public string Deprecated { get; set; } 
+
         public static List<UserData> GetAll()
         {
             using (AddressBookDB db = new AddressBookDB())
             {
-                return (from u in db.Users select u).ToList(); //use db users
+                return (from u in db.Users.Where(x=>x.Deprecated == "0000-00-00 00:00:00") select u).ToList(); //use db users
                 //db.Close(); //используя using метод выполняется автоматически
             }
         }

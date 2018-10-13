@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using System.Text.RegularExpressions; //for Regex
 
 namespace WebAddressBookTests
@@ -41,6 +42,43 @@ namespace WebAddressBookTests
             }
            
             return new List<UserData>(userCache); //вернули копию списка
+        }
+
+        public void AddContactToGroup(UserData contact, GroupData group) //используем в AddingContactToGroupTests
+        {
+            manager.Navi.OpenHomePage();
+            ClearGroupFilter();
+            SelectUser(contact.Id); //
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(3))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0); //ожидание отработки и далее
+        }
+
+        public void RemoveContactToGroup(UserData contact, GroupData group) //используем в AddingContactToGroupTests
+        {
+            manager.Navi.OpenHomePage();
+            ClearGroupFilter();
+            SelectUser(contact.Id); //
+            SelectGroupToAdd(group.Name);
+            CommitAddingContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(3))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0); //ожидание отработки и далее
+        }
+
+        public void CommitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        public void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        public void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
         }
 
         public UserData GetContactInformationFromSmallTable(int index)
@@ -248,6 +286,7 @@ namespace WebAddressBookTests
 
         public ContactHelper SelectUser(String id) //по ид
         {
+            //driver.FindElement(By.Id(contactId));
             driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='"+ id +"'])")).Click(); //передача ид
             return this;
         }

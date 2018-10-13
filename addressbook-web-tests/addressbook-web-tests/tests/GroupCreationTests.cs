@@ -133,5 +133,14 @@ namespace WebAddressBookTests
             Console.Out.Write(end.Subtract(start));
         }
 
+        [Test]
+        public void TestDBInfoContactGroup()
+        {
+            foreach (UserData contact in GroupData.GetAll()[0].GetContacts())
+            {
+                Console.Out.Write(contact);
+            }                
+        }
+
     }
 }

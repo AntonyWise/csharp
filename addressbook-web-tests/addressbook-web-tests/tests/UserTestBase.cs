@@ -12,7 +12,7 @@ namespace WebAddressBookTests
     {
 
         [TearDown]
-        public void CompareGroupsUI_DB()
+        public void CompareUsersUI_DB()
         {
             if (PERFORM_LONG_UI_CHECKS)
             {
