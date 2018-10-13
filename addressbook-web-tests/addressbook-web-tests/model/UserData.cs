@@ -5,9 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Text.RegularExpressions; //for Regex
+using LinqToDB.Mapping;
 
 namespace WebAddressBookTests
 {
+    [Table(Name = "addressbook")]
+
     public class UserData : IEquatable<UserData>, IComparable<UserData>// без модификатора public класс не доступен в ContactHelper
     {
         //private string fFirstname;
@@ -74,19 +77,34 @@ namespace WebAddressBookTests
             }
         }
 
+        [Column(Name = "firstname"), NotNull]
         public string FirstName { get; set; }
 
+        [Column(Name = "lastname"), NotNull]
         public string LastName { get; set; }
 
+        [Column(Name = "address"), NotNull]
         public string Address { get; set; }
 
+        [Column(Name = "home"), NotNull]
         public string Telephone { get; set; }
 
+        [Column(Name = "email"), NotNull]
         public string Email { get; set; }
 
+        [Column(Name = "id"), PrimaryKey, Identity]
         public string Id { get; set; }
 
         public string FullName { get; set; } //без private поля
+
+        public static List<UserData> GetAll()
+        {
+            using (AddressBookDB db = new AddressBookDB())
+            {
+                return (from u in db.Users select u).ToList(); //use db users
+                //db.Close(); //используя using метод выполняется автоматически
+            }
+        }
 
         //
         public string AllPhones

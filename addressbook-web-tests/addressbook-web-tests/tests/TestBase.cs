@@ -11,6 +11,7 @@ namespace WebAddressBookTests
     //public class TestBase : ApplicationManager // было так?
     public class TestBase
     {
+        public static bool PERFORM_LONG_UI_CHECKS = true; //используем проверки в GroupTestBase
         protected ApplicationManager appManager;
  
             [SetUp]

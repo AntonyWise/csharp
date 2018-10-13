@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupRemovalTests : AuthTestBase //наследование не от TestBase
+    public class GroupRemovalTests : GroupTestBase //наследуем от GroupTestBase, было AuthTestBase
     {
         [Test]
         public void GroupRemovalTest()
@@ -29,17 +29,19 @@ namespace WebAddressBookTests
             }
             else //если группы нет - создаем перед удалением
             {
-                List<GroupData> oldGroups = appManager.Groups.GetGroupList(); //читаем начальное количество элементов групп
-                appManager.Groups.Remove(0); //передаем 0, а не 1 т.к поправили XPath
+                //List<GroupData> oldGroups = appManager.Groups.GetGroupList(); //читаем начальное количество элементов групп
+                List<GroupData> oldGroups = GroupData.GetAll(); //замена операции
+                GroupData toBeRemoved = oldGroups[0];
+                appManager.Groups.Remove(toBeRemoved); //передаем 0, а не 1 т.к поправили XPath
 
                 //редко необходимая проверка
                 int count = appManager.Groups.GetGroupCount();
                 Assert.AreEqual(oldGroups.Count - 1, count);
 
                 Console.Out.Write("group deleted");
-                List<GroupData> newGroups = appManager.Groups.GetGroupList(); //читаем значение после выполнения удаления группы
+                List<GroupData> newGroups = GroupData.GetAll(); //читаем значение после выполнения удаления группы
 
-                GroupData toBeRemoved = oldGroups[0];
+                //GroupData toBeRemoved = oldGroups[0];
                 oldGroups.RemoveAt(0); //удаляем элемент
                 Assert.AreEqual(oldGroups, newGroups); //сравнение списков
 

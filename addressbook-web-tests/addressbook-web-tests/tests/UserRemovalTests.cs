@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class UserRemovalTests : AuthTestBase // не от TestBase
+    public class UserRemovalTests : UserTestBase // не от TestBase
     {
         [Test]
         public void UserRemovalTest()
@@ -28,16 +28,18 @@ namespace WebAddressBookTests
             else
             {
 
-                List<UserData> oldUsers = appManager.User.GetUserList(); 
-
-                appManager.User.Remove(0);
-                Console.Out.Write("add check");
-                int count = appManager.User.GetUserCount();
-                Assert.AreEqual(oldUsers.Count - 1, appManager.User.GetUserCount()); // ожидаемое и фактическое значение
-
-                List<UserData> newUsers = appManager.User.GetUserList();
-
+                List<UserData> oldUsers = UserData.GetAll();
                 UserData toBeRemoved = oldUsers[0];
+                appManager.User.Remove(toBeRemoved);
+                Console.Out.Write("add check");
+
+                int count = appManager.User.GetUserCount();
+                Assert.AreEqual(oldUsers.Count - 1, count); // ожидаемое и фактическое значение
+
+                Console.Out.Write("user deleted");
+                List<UserData> newUsers = UserData.GetAll();
+
+                //UserData toBeRemoved = oldUsers[0];
                 oldUsers.RemoveAt(0);
                 Assert.AreEqual(oldUsers, newUsers);
 

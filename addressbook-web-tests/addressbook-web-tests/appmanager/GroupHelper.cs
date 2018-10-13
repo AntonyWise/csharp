@@ -79,6 +79,17 @@ namespace WebAddressBookTests
             return this;
         }
 
+        public GroupHelper Modify(GroupData group, GroupData newData)
+        {
+            //manager.Navi.GoToGroupsPage();
+            SelectGroup(group.Id);
+            InitGroupModification();
+            FillGroupForm(newData);
+            SubmitGroupModification();
+            ReturnToGroupsPage();
+            return this;
+        }
+
         public GroupHelper Remove(int group)
         {
             //manager.Navi.GoToGroupsPage();
@@ -86,6 +97,15 @@ namespace WebAddressBookTests
                 RemoveGroup();
                 ReturnToGroupsPage();
                 return this;
+        }
+
+        public GroupHelper Remove(GroupData group)
+        {
+            manager.Navi.GoToGroupsPage();
+            SelectGroup(group.Id);
+            RemoveGroup();
+            ReturnToGroupsPage();
+            return this;
         }
 
         public GroupHelper RemoveGroup() // возврат ссылки на сам метод для тестов
@@ -97,8 +117,14 @@ namespace WebAddressBookTests
 
         public GroupHelper SelectGroup(int index)
         {
-                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click(); // передача индекса, а не конкретного элемента
+                driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click(); //передача индекса, а не конкретного элемента
                 return this;
+        }
+
+        public GroupHelper SelectGroup(String id) //по ид
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='"+ id +"'])")).Click(); //передача ид
+            return this;
         }
 
         public bool GroupIsAvailable()

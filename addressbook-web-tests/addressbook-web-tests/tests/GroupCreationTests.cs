@@ -14,7 +14,7 @@ using System.Linq;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class GroupCreationTests : AuthTestBase
+    public class GroupCreationTests : GroupTestBase //наследуем от GroupTestBase, было AuthTestBase
     {
         public static IEnumerable<GroupData> RandomGroupDataProvider() //static для NUnit
         {
@@ -69,14 +69,14 @@ namespace WebAddressBookTests
             group.Header = "header";
             group.Footer = "footer";*/
 
-            List<GroupData> oldGroups = appManager.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
             appManager.Groups.Create(group);
 
             //редко необходимая проверка
             int count = appManager.Groups.GetGroupCount();
             Assert.AreEqual(oldGroups.Count + 1, count);
 
-            List<GroupData> newGroups = appManager.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group); // добавляем для сравнения списков
 
             //сортировка групп перед сравнением
@@ -94,14 +94,14 @@ namespace WebAddressBookTests
             group.Header = "";
             group.Footer = "";
 
-            List<GroupData> oldGroups = appManager.Groups.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
             appManager.Groups.Create(group);
 
             //редко необходимая проверка
             int count = appManager.Groups.GetGroupCount();
             Assert.AreEqual(oldGroups.Count + 1, count);
 
-            List<GroupData> newGroups = appManager.Groups.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups.Add(group); // добавляем для сравнения списков
 
             //сортировка групп перед сравнением

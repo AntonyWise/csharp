@@ -9,12 +9,12 @@ using NUnit.Framework;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class UserModificationTests : AuthTestBase // не от TestBase
+    public class UserModificationTests : UserTestBase // не от TestBase
     {
         [Test]
         public void UserModificationTest()
         {
-            //если нет юзера - создаю
+            //юзера нет - создаем
             if (!appManager.User.UserIsAvailable())
             {
                 UserData user = new UserData("antonyNEW");
@@ -26,22 +26,22 @@ namespace WebAddressBookTests
             }
             else
             {
-                //если есть юзер - модификация
+                //юзер есть - изменяем
                 UserData newUser = new UserData("antonyNEW");
                 newUser.LastName = "Wise";
                 newUser.Address = "SPB";
                 newUser.Telephone = "8888";
                 newUser.Email = "test_new@mail.ru";
 
-                List<UserData> oldUsers = appManager.User.GetUserList();
+                List<UserData> oldUsers = UserData.GetAll();
                 UserData oldUser = oldUsers[0];
                 appManager.User.Modify(0, newUser);
 
                 Console.Out.Write("add check");
                 int count = appManager.User.GetUserCount();
-                Assert.AreEqual(oldUsers.Count, appManager.User.GetUserCount()); // ожидаемое и фактическое значение
+                Assert.AreEqual(oldUsers.Count, count); // ожидаемое и фактическое значение
 
-                List<UserData> newUsers = appManager.User.GetUserList();
+                List<UserData> newUsers = UserData.GetAll();
                 oldUsers[0].LastName = newUser.LastName;
                 oldUsers[0].FirstName = newUser.FirstName;
 

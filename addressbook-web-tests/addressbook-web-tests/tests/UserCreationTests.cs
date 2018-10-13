@@ -14,7 +14,7 @@ using Newtonsoft.Json;
 namespace WebAddressBookTests
 {
     [TestFixture]
-    public class UserCreationTests : AuthTestBase // не от TestBase
+    public class UserCreationTests : UserTestBase // не от TestBase, не от AuthBase
     {
         public static IEnumerable<UserData> RandomGroupDataProvider() //static для NUnit
         {
@@ -57,14 +57,14 @@ namespace WebAddressBookTests
             //user.Telephone = "89005555555";
             //user.Email = "test@mail.ru";
 
-            List<UserData> oldUsers = appManager.User.GetUserList();
+            List<UserData> oldUsers = UserData.GetAll();
             appManager.User.Create(user);
 
             Console.Out.Write("add check");
             int count = appManager.User.GetUserCount();
             Assert.AreEqual(oldUsers.Count + 1, count); // ожидаемое и фактическое значение
 
-            List<UserData> newUsers = appManager.User.GetUserList();
+            List<UserData> newUsers = UserData.GetAll();
             oldUsers.Add(user); // добавляем для сравнения списков
             
             //сортировка групп перед сравнением

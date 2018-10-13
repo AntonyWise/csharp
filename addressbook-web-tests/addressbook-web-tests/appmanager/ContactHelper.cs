@@ -34,13 +34,13 @@ namespace WebAddressBookTests
                     IList<IWebElement> cells = element.FindElements(By.TagName("td"));
                     string firstname = cells[2].Text;
                     string lastname = cells[1].Text;
-                    UserData user = new UserData(firstname, lastname);//конструктор с именем и фамилией в UserData                 
+                    UserData user = new UserData(firstname, lastname); //конструктор с именем и фамилией в UserData                 
                     user.Id = element.FindElement(By.XPath("//input[@name='selected[]']")).GetAttribute("value");
                     userCache.Add(user);
                 }
             }
            
-            return new List<UserData>(userCache);//вернули копию списка
+            return new List<UserData>(userCache); //вернули копию списка
         }
 
         public UserData GetContactInformationFromSmallTable(int index)
@@ -155,7 +155,7 @@ namespace WebAddressBookTests
 
         public int GetUserCount()
         {
-            return driver.FindElements(By.XPath("//tr[@name = 'entry']")).Count;
+            return driver.FindElements(By.XPath("//tr[@name='entry']")).Count;
         }
 
         public ContactHelper Create(UserData user)
@@ -180,9 +180,27 @@ namespace WebAddressBookTests
             return this;
         }
 
+        public ContactHelper Modify(UserData user, UserData newUser)
+        {
+            manager.Navi.OpenHomePage();
+
+            //SelectUser(user);
+            InitUserModification(user.Id);
+            FillUserForm(newUser);
+            SubmitUserModification();
+            ReturnHomePage();
+            return this;
+        }
+
         public ContactHelper InitUserModification(int index)
         {
             driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).FindElement(By.XPath("//img[@title='Edit']")).Click();
+            return this;
+        }
+
+        public ContactHelper InitUserModification(String id)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='" + id + "'])")).FindElement(By.XPath("//img[@title='Edit']")).Click();
             return this;
         }
 
@@ -190,6 +208,16 @@ namespace WebAddressBookTests
         {
             //manager.Navi.OpenHomePage();
             SelectUser(user);
+            RemoveUser();
+            //driver.SwitchTo().Alert().Accept();
+            ReturnHomePage();
+            return this;
+        }
+
+        public ContactHelper Remove(UserData user) //удаление по индексу
+        {
+            //manager.Navi.OpenHomePage();
+            SelectUser(user.Id);
             RemoveUser();
             //driver.SwitchTo().Alert().Accept();
             ReturnHomePage();
@@ -214,7 +242,13 @@ namespace WebAddressBookTests
 
         public ContactHelper SelectUser(int index)
         {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click(); // передача индекса, а не конкретного элемента
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + (index+1) + "]")).Click(); //передача индекса, а не конкретного элемента
+            return this;
+        }
+
+        public ContactHelper SelectUser(String id) //по ид
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]' and @value='"+ id +"'])")).Click(); //передача ид
             return this;
         }
 
