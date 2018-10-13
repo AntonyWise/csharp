@@ -10,7 +10,7 @@ namespace WebAddressBookTests
 {
     [Table(Name = "address_in_groups")]
 
-    public class GroupContactRelation
+    public class GroupContactRelation //GCR
     {
         [Column(Name ="group_id")]
         public string GroupId { get; set; }

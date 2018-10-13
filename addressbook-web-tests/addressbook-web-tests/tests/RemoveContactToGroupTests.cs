@@ -15,7 +15,7 @@ namespace WebAddressBookTests
         public void TestRemoveContactToGroup()
         {
             GroupData group = GroupData.GetAll()[0];
-            List<UserData> oldList = group.GetContacts(); //читаем начальное значение
+            List<UserData> oldList = group.GetContactsInGroup(); //читаем начальное значение
             UserData contact = UserData.GetAll().Except(oldList).First(); //исключаем
 
             appManager.User.RemoveContactToGroup(contact, group);
@@ -27,5 +27,6 @@ namespace WebAddressBookTests
 
             Assert.AreEqual(oldList, newList);
         }
+
     }
 }

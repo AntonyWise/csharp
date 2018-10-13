@@ -55,17 +55,26 @@ namespace WebAddressBookTests
                 .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0); //ожидание отработки и далее
         }
 
-        public void RemoveContactToGroup(UserData contact, GroupData group) //используем в AddingContactToGroupTests
+        public void RemoveContactToGroup(UserData contact, GroupData group) //используем в RemoveContactToGroupTests
         {
             manager.Navi.OpenHomePage();
-            ClearGroupFilter();
+            SelectGroupFilter(group.Name);
             SelectUser(contact.Id); //
-            SelectGroupToAdd(group.Name);
-            CommitAddingContactToGroup();
-            new WebDriverWait(driver, TimeSpan.FromSeconds(3))
-                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0); //ожидание отработки и далее
+            CommitRemoveContact();
+            //new WebDriverWait(driver, TimeSpan.FromSeconds(3))
+                //.Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0); //ожидание отработки и далее
         }
 
+        private void CommitRemoveContact()
+        {
+            driver.FindElement(By.Name("remove")).Click();
+        }
+
+        private void SelectGroupFilter(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("modify1"); //жестко задана группа
+        }
+       
         public void CommitAddingContactToGroup()
         {
             driver.FindElement(By.Name("add")).Click();
